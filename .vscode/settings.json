@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "step_motor.h": "c"
+    },
+    "cmake.sourceDirectory": "/home/alan/STM32Project/STM32F407VGT6/School_Football_Project/Drivers/CMSIS/NN"
+}
