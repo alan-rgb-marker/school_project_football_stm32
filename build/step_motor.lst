@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc5i0wz2.s 			page 1
+ARM GAS  /tmp/ccvv8Eal.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
   41              		.loc 1 15 5 is_stmt 1 view .LVU5
   42              		.loc 1 15 33 is_stmt 0 view .LVU6
   43 0004 8360     		str	r3, [r0, #8]
-ARM GAS  /tmp/cc5i0wz2.s 			page 2
+ARM GAS  /tmp/ccvv8Eal.s 			page 2
 
 
   16:Core/Src/step_motor.c ****     step_motor->Slide_Dir_GPIO_Pin = Slide_Dir_GPIO_Pin;
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
   92              	.LVL2:
   93              	.LFB138:
   24:Core/Src/step_motor.c **** 
-ARM GAS  /tmp/cc5i0wz2.s 			page 3
+ARM GAS  /tmp/ccvv8Eal.s 			page 3
 
 
   25:Core/Src/step_motor.c **** void start_step_motor(Step_motor *step_motor)
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  141              	.LFB139:
   33:Core/Src/step_motor.c **** 
   34:Core/Src/step_motor.c **** void stop_step_motor(Step_motor *step_motor)
-ARM GAS  /tmp/cc5i0wz2.s 			page 4
+ARM GAS  /tmp/ccvv8Eal.s 			page 4
 
 
   35:Core/Src/step_motor.c **** {
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
   42:Core/Src/step_motor.c **** 
   43:Core/Src/step_motor.c **** void dir_and_move_step_motor(Step_motor *step_motor, int dir)
   44:Core/Src/step_motor.c **** {
-ARM GAS  /tmp/cc5i0wz2.s 			page 5
+ARM GAS  /tmp/ccvv8Eal.s 			page 5
 
 
  190              		.loc 1 44 1 is_stmt 1 view -0
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  237              		.section	.text.which_man_range,"ax",%progbits
  238              		.align	1
  239              		.global	which_man_range
-ARM GAS  /tmp/cc5i0wz2.s 			page 6
+ARM GAS  /tmp/ccvv8Eal.s 			page 6
 
 
  240              		.syntax unified
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  278 0016 7047     		bx	lr
  279              	.LVL20:
  280              	.L26:
-ARM GAS  /tmp/cc5i0wz2.s 			page 7
+ARM GAS  /tmp/ccvv8Eal.s 			page 7
 
 
   66:Core/Src/step_motor.c ****         }
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  322 0016 37EE277A 		vadd.f32	s14, s14, s15
  323 001a 80ED077A 		vstr.32	s14, [r0, #28]
   81:Core/Src/step_motor.c ****         step_motor->man[1] += step_motor->Slide_Dir * one_step;
-ARM GAS  /tmp/cc5i0wz2.s 			page 8
+ARM GAS  /tmp/ccvv8Eal.s 			page 8
 
 
  324              		.loc 1 81 9 is_stmt 1 view .LVU76
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
   91:Core/Src/step_motor.c ****     {
   92:Core/Src/step_motor.c ****         pid->Ki = 1.0f;
  370              		.loc 1 92 9 is_stmt 1 view .LVU87
-ARM GAS  /tmp/cc5i0wz2.s 			page 9
+ARM GAS  /tmp/ccvv8Eal.s 			page 9
 
 
  371              		.loc 1 92 17 is_stmt 0 view .LVU88
@@ -499,7 +499,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  383              		.loc 1 95 23 is_stmt 0 view .LVU94
  384 0014 094B     		ldr	r3, .L38+8
  385 0016 4361     		str	r3, [r0, #20]	@ float
-  96:Core/Src/step_motor.c ****         pid->DEAD_ZONE = 500.0f;
+  96:Core/Src/step_motor.c ****         pid->DEAD_ZONE = 400.0f;
  386              		.loc 1 96 9 is_stmt 1 view .LVU95
  387              		.loc 1 96 24 is_stmt 0 view .LVU96
  388 0018 094B     		ldr	r3, .L38+12
@@ -537,8 +537,8 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  416 0034 0000A042 		.word	1117782016
  417 0038 0AD7A33C 		.word	1017370378
  418 003c 0000FA44 		.word	1157234688
- 419 0040 0000FA43 		.word	1140457472
-ARM GAS  /tmp/cc5i0wz2.s 			page 10
+ 419 0040 0000C843 		.word	1137180672
+ARM GAS  /tmp/ccvv8Eal.s 			page 10
 
 
  420              		.cfi_endproc
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  111:Core/Src/step_motor.c ****     // if (output > pid->MAX_FREQ)
  112:Core/Src/step_motor.c ****     //     output = pid->MAX_FREQ;
  113:Core/Src/step_motor.c ****     // if (output < -pid->MAX_FREQ)
-ARM GAS  /tmp/cc5i0wz2.s 			page 11
+ARM GAS  /tmp/ccvv8Eal.s 			page 11
 
 
  114:Core/Src/step_motor.c ****     //     output = -pid->MAX_FREQ;
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  131:Core/Src/step_motor.c ****     float output = pid->Kp * error + pid->Ki * pid->integral;
  499              		.loc 1 131 5 is_stmt 1 view .LVU123
  500              		.loc 1 131 23 is_stmt 0 view .LVU124
-ARM GAS  /tmp/cc5i0wz2.s 			page 12
+ARM GAS  /tmp/ccvv8Eal.s 			page 12
 
 
  501 0048 D4ED007A 		vldr.32	s15, [r4]
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  545              		.loc 1 141 5 is_stmt 1 view .LVU141
  546 0096 19EE100A 		vmov	r0, s18
  547              	.LVL38:
-ARM GAS  /tmp/cc5i0wz2.s 			page 13
+ARM GAS  /tmp/ccvv8Eal.s 			page 13
 
 
  548              		.loc 1 141 5 is_stmt 0 view .LVU142
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  597              	.L50:
  598 00d8 00007A44 		.word	1148846080
  599 00dc 00000000 		.word	0
-ARM GAS  /tmp/cc5i0wz2.s 			page 14
+ARM GAS  /tmp/ccvv8Eal.s 			page 14
 
 
  600 00e0 00000000 		.word	.LC0
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  636 0012 DFED236A 		vldr.32	s13, .L68
  637 0016 C6EE877A 		vdiv.f32	s15, s13, s14
  638              		.loc 1 164 9 view .LVU159
-ARM GAS  /tmp/cc5i0wz2.s 			page 15
+ARM GAS  /tmp/ccvv8Eal.s 			page 15
 
 
  639 001a FCEEE77A 		vcvt.u32.f32	s15, s15
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  159:Core/Src/step_motor.c ****         return;
  686              		.loc 1 159 9 discriminator 4 view .LVU172
  687 0058 082B     		cmp	r3, #8
-ARM GAS  /tmp/cc5i0wz2.s 			page 16
+ARM GAS  /tmp/ccvv8Eal.s 			page 16
 
 
  688 005a 09D0     		beq	.L65
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
  733              		.loc 1 166 5 discriminator 3 view .LVU182
  734 0092 8B63     		str	r3, [r1, #56]
-ARM GAS  /tmp/cc5i0wz2.s 			page 17
+ARM GAS  /tmp/ccvv8Eal.s 			page 17
 
 
  735 0094 D2E7     		b	.L60
@@ -1012,43 +1012,43 @@ ARM GAS  /tmp/cc5i0wz2.s 			page 1
  790              		.file 8 "Core/Inc/step_motor.h"
  791              		.file 9 "/usr/include/newlib/stdio.h"
  792              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  /tmp/cc5i0wz2.s 			page 18
+ARM GAS  /tmp/ccvv8Eal.s 			page 18
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 step_motor.c
-     /tmp/cc5i0wz2.s:21     .text.step_motor_init:00000000 $t
-     /tmp/cc5i0wz2.s:27     .text.step_motor_init:00000000 step_motor_init
-     /tmp/cc5i0wz2.s:79     .text.step_motor_init:00000028 $d
-     /tmp/cc5i0wz2.s:85     .text.start_step_motor:00000000 $t
-     /tmp/cc5i0wz2.s:91     .text.start_step_motor:00000000 start_step_motor
-     /tmp/cc5i0wz2.s:133    .text.stop_step_motor:00000000 $t
-     /tmp/cc5i0wz2.s:139    .text.stop_step_motor:00000000 stop_step_motor
-     /tmp/cc5i0wz2.s:181    .text.dir_and_move_step_motor:00000000 $t
-     /tmp/cc5i0wz2.s:187    .text.dir_and_move_step_motor:00000000 dir_and_move_step_motor
-     /tmp/cc5i0wz2.s:238    .text.which_man_range:00000000 $t
-     /tmp/cc5i0wz2.s:244    .text.which_man_range:00000000 which_man_range
-     /tmp/cc5i0wz2.s:296    .text.compute_man_location:00000000 $t
-     /tmp/cc5i0wz2.s:302    .text.compute_man_location:00000000 compute_man_location
-     /tmp/cc5i0wz2.s:342    .text.compute_man_location:00000038 $d
-     /tmp/cc5i0wz2.s:347    .text.init_pid:00000000 $t
-     /tmp/cc5i0wz2.s:353    .text.init_pid:00000000 init_pid
-     /tmp/cc5i0wz2.s:416    .text.init_pid:00000034 $d
-     /tmp/cc5i0wz2.s:425    .rodata.PI_Update.str1.4:00000000 $d
-     /tmp/cc5i0wz2.s:430    .text.PI_Update:00000000 $t
-     /tmp/cc5i0wz2.s:436    .text.PI_Update:00000000 PI_Update
-     /tmp/cc5i0wz2.s:598    .text.PI_Update:000000d8 $d
-     /tmp/cc5i0wz2.s:606    .text.Set_Step_Frequency:00000000 $t
-     /tmp/cc5i0wz2.s:612    .text.Set_Step_Frequency:00000000 Set_Step_Frequency
-     /tmp/cc5i0wz2.s:749    .text.Set_Step_Frequency:000000a0 $d
-     /tmp/cc5i0wz2.s:758    .rodata.one_step:00000000 one_step
-     /tmp/cc5i0wz2.s:755    .rodata.one_step:00000000 $d
-     /tmp/cc5i0wz2.s:765    .rodata.man_range2:00000000 man_range2
-     /tmp/cc5i0wz2.s:762    .rodata.man_range2:00000000 $d
-     /tmp/cc5i0wz2.s:772    .rodata.man_range1:00000000 man_range1
-     /tmp/cc5i0wz2.s:769    .rodata.man_range1:00000000 $d
-     /tmp/cc5i0wz2.s:779    .rodata.MY_PI:00000000 MY_PI
-     /tmp/cc5i0wz2.s:776    .rodata.MY_PI:00000000 $d
+     /tmp/ccvv8Eal.s:21     .text.step_motor_init:00000000 $t
+     /tmp/ccvv8Eal.s:27     .text.step_motor_init:00000000 step_motor_init
+     /tmp/ccvv8Eal.s:79     .text.step_motor_init:00000028 $d
+     /tmp/ccvv8Eal.s:85     .text.start_step_motor:00000000 $t
+     /tmp/ccvv8Eal.s:91     .text.start_step_motor:00000000 start_step_motor
+     /tmp/ccvv8Eal.s:133    .text.stop_step_motor:00000000 $t
+     /tmp/ccvv8Eal.s:139    .text.stop_step_motor:00000000 stop_step_motor
+     /tmp/ccvv8Eal.s:181    .text.dir_and_move_step_motor:00000000 $t
+     /tmp/ccvv8Eal.s:187    .text.dir_and_move_step_motor:00000000 dir_and_move_step_motor
+     /tmp/ccvv8Eal.s:238    .text.which_man_range:00000000 $t
+     /tmp/ccvv8Eal.s:244    .text.which_man_range:00000000 which_man_range
+     /tmp/ccvv8Eal.s:296    .text.compute_man_location:00000000 $t
+     /tmp/ccvv8Eal.s:302    .text.compute_man_location:00000000 compute_man_location
+     /tmp/ccvv8Eal.s:342    .text.compute_man_location:00000038 $d
+     /tmp/ccvv8Eal.s:347    .text.init_pid:00000000 $t
+     /tmp/ccvv8Eal.s:353    .text.init_pid:00000000 init_pid
+     /tmp/ccvv8Eal.s:416    .text.init_pid:00000034 $d
+     /tmp/ccvv8Eal.s:425    .rodata.PI_Update.str1.4:00000000 $d
+     /tmp/ccvv8Eal.s:430    .text.PI_Update:00000000 $t
+     /tmp/ccvv8Eal.s:436    .text.PI_Update:00000000 PI_Update
+     /tmp/ccvv8Eal.s:598    .text.PI_Update:000000d8 $d
+     /tmp/ccvv8Eal.s:606    .text.Set_Step_Frequency:00000000 $t
+     /tmp/ccvv8Eal.s:612    .text.Set_Step_Frequency:00000000 Set_Step_Frequency
+     /tmp/ccvv8Eal.s:749    .text.Set_Step_Frequency:000000a0 $d
+     /tmp/ccvv8Eal.s:758    .rodata.one_step:00000000 one_step
+     /tmp/ccvv8Eal.s:755    .rodata.one_step:00000000 $d
+     /tmp/ccvv8Eal.s:765    .rodata.man_range2:00000000 man_range2
+     /tmp/ccvv8Eal.s:762    .rodata.man_range2:00000000 $d
+     /tmp/ccvv8Eal.s:772    .rodata.man_range1:00000000 man_range1
+     /tmp/ccvv8Eal.s:769    .rodata.man_range1:00000000 $d
+     /tmp/ccvv8Eal.s:779    .rodata.MY_PI:00000000 MY_PI
+     /tmp/ccvv8Eal.s:776    .rodata.MY_PI:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_TIM_Base_Start_IT
