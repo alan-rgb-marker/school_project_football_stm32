@@ -69,7 +69,43 @@ float *which_man_range(Coord *ball_coord, Step_motor *step_motor)
             return &step_motor->man[0];
         }
     }
+    else
+    {
+        return NULL;
+    }
 }
+
+Step_motor *which_step_motor(Coord *ball_coord, Step_motor *one, Step_motor *two, Step_motor *three)
+{
+    if (ball_coord->x > 371)
+    {
+        // 停止只保留一個馬達在場上動
+        stop_step_motor(two);
+        stop_step_motor(three);
+        return one;
+    }
+    else if (ball_coord->x > 207)
+    {
+        stop_step_motor(one);
+        stop_step_motor(three);
+        return two;
+    }
+    else if (ball_coord->x > 0)
+    {
+        stop_step_motor(one);
+        stop_step_motor(two);
+        return three;
+    }
+    else
+    {
+        // x <= 0 的情況：全部停
+        stop_step_motor(one);
+        stop_step_motor(two);
+        stop_step_motor(three);
+        return NULL;
+    }
+}
+
 /* ------------------------------------------判斷球在小人的哪個範圍--------------------------------------------- */
 
 /* ---------------------------------------------tim小人位置計算----------------------------------------------- */
@@ -82,7 +118,6 @@ void compute_man_location(Step_motor *step_motor)
         step_motor->man[2] += step_motor->Slide_Dir * one_step;
     }
 }
-
 /* ---------------------------------------------pi----------------------------------------------- */
 
 void init_pid(PIDController *pid)
@@ -101,22 +136,6 @@ void init_pid(PIDController *pid)
 
 float PI_Update(PIDController *pid, float error)
 {
-
-    // float error = result;
-    // pid->integral += error * pid->DT_SEC;
-
-    // float output = pid->Kp * error + pid->Ki * pid->integral;
-
-    // // 安全限制
-    // if (output > pid->MAX_FREQ)
-    //     output = pid->MAX_FREQ;
-    // if (output < -pid->MAX_FREQ)
-    //     output = -pid->MAX_FREQ;
-    // if (fabs(output) < pid->DEAD_ZONE)
-    //     output = 0;
-
-    // return output;
-
     uint32_t now = HAL_GetTick();
     float dt = (now - pid->last_time) / 1000.0f; // 換算成秒
     pid->last_time = now;
@@ -137,8 +156,6 @@ float PI_Update(PIDController *pid, float error)
         output = -pid->MAX_FREQ;
     if (fabs(output) < pid->DEAD_ZONE)
         output = 0;
-
-    printf("error: %.2f, integral: %.2f, output(freq): %.2f\r\n", error, pid->integral, output);
 
     return output;
 }

@@ -66,6 +66,7 @@ void stop_step_motor(Step_motor *step_motor);
 void dir_and_move_step_motor(Step_motor* step_motor, int dir);
 
 float *which_man_range(Coord *ball_coord, Step_motor *step_motor);
+Step_motor* which_step_motor(Coord *ball_coord, Step_motor* one, Step_motor* two, Step_motor* three);
 
 void compute_man_location(Step_motor* step_motor);
 

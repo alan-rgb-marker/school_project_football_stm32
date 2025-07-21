@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccvv8Eal.s 			page 1
+ARM GAS  /tmp/ccBk6Q5S.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
   41              		.loc 1 15 5 is_stmt 1 view .LVU5
   42              		.loc 1 15 33 is_stmt 0 view .LVU6
   43 0004 8360     		str	r3, [r0, #8]
-ARM GAS  /tmp/ccvv8Eal.s 			page 2
+ARM GAS  /tmp/ccBk6Q5S.s 			page 2
 
 
   16:Core/Src/step_motor.c ****     step_motor->Slide_Dir_GPIO_Pin = Slide_Dir_GPIO_Pin;
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
   92              	.LVL2:
   93              	.LFB138:
   24:Core/Src/step_motor.c **** 
-ARM GAS  /tmp/ccvv8Eal.s 			page 3
+ARM GAS  /tmp/ccBk6Q5S.s 			page 3
 
 
   25:Core/Src/step_motor.c **** void start_step_motor(Step_motor *step_motor)
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
  141              	.LFB139:
   33:Core/Src/step_motor.c **** 
   34:Core/Src/step_motor.c **** void stop_step_motor(Step_motor *step_motor)
-ARM GAS  /tmp/ccvv8Eal.s 			page 4
+ARM GAS  /tmp/ccBk6Q5S.s 			page 4
 
 
   35:Core/Src/step_motor.c **** {
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
   42:Core/Src/step_motor.c **** 
   43:Core/Src/step_motor.c **** void dir_and_move_step_motor(Step_motor *step_motor, int dir)
   44:Core/Src/step_motor.c **** {
-ARM GAS  /tmp/ccvv8Eal.s 			page 5
+ARM GAS  /tmp/ccBk6Q5S.s 			page 5
 
 
  190              		.loc 1 44 1 is_stmt 1 view -0
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
  237              		.section	.text.which_man_range,"ax",%progbits
  238              		.align	1
  239              		.global	which_man_range
-ARM GAS  /tmp/ccvv8Eal.s 			page 6
+ARM GAS  /tmp/ccBk6Q5S.s 			page 6
 
 
  240              		.syntax unified
@@ -320,7 +320,7 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
   57:Core/Src/step_motor.c ****     if (ball_coord != NULL)
  252              		.loc 1 57 5 view .LVU52
  253              		.loc 1 57 8 is_stmt 0 view .LVU53
- 254 0000 68B1     		cbz	r0, .L23
+ 254 0000 68B1     		cbz	r0, .L26
   58:Core/Src/step_motor.c ****     {
   59:Core/Src/step_motor.c ****         if (ball_coord->y > man_range2)
  255              		.loc 1 59 9 is_stmt 1 view .LVU54
@@ -336,7 +336,7 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
  261              		.loc 1 63 14 is_stmt 1 view .LVU57
  262              		.loc 1 63 17 is_stmt 0 view .LVU58
  263 0008 642B     		cmp	r3, #100
- 264 000a 05DD     		ble	.L26
+ 264 000a 05DD     		ble	.L25
   64:Core/Src/step_motor.c ****         {
   65:Core/Src/step_motor.c ****             return &step_motor->man[1];
  265              		.loc 1 65 13 is_stmt 1 view .LVU59
@@ -357,8 +357,8 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
  277              		.loc 1 61 20 view .LVU64
  278 0016 7047     		bx	lr
  279              	.LVL20:
- 280              	.L26:
-ARM GAS  /tmp/ccvv8Eal.s 			page 7
+ 280              	.L25:
+ARM GAS  /tmp/ccBk6Q5S.s 			page 7
 
 
   66:Core/Src/step_motor.c ****         }
@@ -372,683 +372,853 @@ ARM GAS  /tmp/ccvv8Eal.s 			page 1
  285              		.loc 1 69 20 view .LVU67
  286 001c 7047     		bx	lr
  287              	.LVL22:
- 288              	.L23:
- 289              	.LVL23:
+ 288              	.L26:
   70:Core/Src/step_motor.c ****         }
   71:Core/Src/step_motor.c ****     }
-  72:Core/Src/step_motor.c **** }
- 290              		.loc 1 72 1 view .LVU68
- 291 001e 7047     		bx	lr
- 292              		.cfi_endproc
- 293              	.LFE141:
- 295              		.section	.text.compute_man_location,"ax",%progbits
- 296              		.align	1
- 297              		.global	compute_man_location
- 298              		.syntax unified
- 299              		.thumb
- 300              		.thumb_func
- 302              	compute_man_location:
- 303              	.LVL24:
- 304              	.LFB142:
-  73:Core/Src/step_motor.c **** /* ------------------------------------------判斷球在小人的哪個範圍---------------------
-  74:Core/Src/step_motor.c **** 
-  75:Core/Src/step_motor.c **** /* ---------------------------------------------tim小人位置計算------------------------------
-  76:Core/Src/step_motor.c **** void compute_man_location(Step_motor *step_motor)
-  77:Core/Src/step_motor.c **** {
- 305              		.loc 1 77 1 is_stmt 1 view -0
- 306              		.cfi_startproc
- 307              		@ args = 0, pretend = 0, frame = 0
- 308              		@ frame_needed = 0, uses_anonymous_args = 0
- 309              		@ link register save eliminated.
-  78:Core/Src/step_motor.c ****     if (step_motor != NULL)
- 310              		.loc 1 78 5 view .LVU70
- 311              		.loc 1 78 8 is_stmt 0 view .LVU71
- 312 0000 C8B1     		cbz	r0, .L28
-  79:Core/Src/step_motor.c ****     {
-  80:Core/Src/step_motor.c ****         step_motor->man[0] += step_motor->Slide_Dir * one_step;
- 313              		.loc 1 80 9 is_stmt 1 view .LVU72
- 314              		.loc 1 80 24 is_stmt 0 view .LVU73
- 315 0002 90ED077A 		vldr.32	s14, [r0, #28]
- 316              		.loc 1 80 53 view .LVU74
- 317 0006 D0ED047A 		vldr.32	s15, [r0, #16]	@ int
- 318 000a F8EEE77A 		vcvt.f32.s32	s15, s15
- 319 000e DFED0A6A 		vldr.32	s13, .L30
- 320 0012 67EEA67A 		vmul.f32	s15, s15, s13
- 321              		.loc 1 80 28 view .LVU75
- 322 0016 37EE277A 		vadd.f32	s14, s14, s15
- 323 001a 80ED077A 		vstr.32	s14, [r0, #28]
-  81:Core/Src/step_motor.c ****         step_motor->man[1] += step_motor->Slide_Dir * one_step;
-ARM GAS  /tmp/ccvv8Eal.s 			page 8
+  72:Core/Src/step_motor.c ****     else
+  73:Core/Src/step_motor.c ****     {
+  74:Core/Src/step_motor.c ****         return NULL;
+  75:Core/Src/step_motor.c ****     }
+  76:Core/Src/step_motor.c **** }
+ 289              		.loc 1 76 1 view .LVU68
+ 290 001e 7047     		bx	lr
+ 291              		.cfi_endproc
+ 292              	.LFE141:
+ 294              		.section	.text.which_step_motor,"ax",%progbits
+ 295              		.align	1
+ 296              		.global	which_step_motor
+ 297              		.syntax unified
+ 298              		.thumb
+ 299              		.thumb_func
+ 301              	which_step_motor:
+ 302              	.LVL23:
+ 303              	.LFB142:
+  77:Core/Src/step_motor.c **** 
+  78:Core/Src/step_motor.c **** Step_motor *which_step_motor(Coord *ball_coord, Step_motor *one, Step_motor *two, Step_motor *three
+  79:Core/Src/step_motor.c **** {
+ 304              		.loc 1 79 1 is_stmt 1 view -0
+ 305              		.cfi_startproc
+ 306              		@ args = 0, pretend = 0, frame = 0
+ 307              		@ frame_needed = 0, uses_anonymous_args = 0
+ 308              		.loc 1 79 1 is_stmt 0 view .LVU70
+ 309 0000 70B5     		push	{r4, r5, r6, lr}
+ 310              	.LCFI6:
+ 311              		.cfi_def_cfa_offset 16
+ 312              		.cfi_offset 4, -16
+ 313              		.cfi_offset 5, -12
+ 314              		.cfi_offset 6, -8
+ 315              		.cfi_offset 14, -4
+ 316 0002 0E46     		mov	r6, r1
+ 317 0004 1546     		mov	r5, r2
+ 318 0006 1C46     		mov	r4, r3
+  80:Core/Src/step_motor.c ****     if (ball_coord->x > 371)
+ 319              		.loc 1 80 5 is_stmt 1 view .LVU71
+ 320              		.loc 1 80 19 is_stmt 0 view .LVU72
+ 321 0008 0368     		ldr	r3, [r0]
+ 322              	.LVL24:
+ 323              		.loc 1 80 8 view .LVU73
+ 324 000a B3F5BA7F 		cmp	r3, #372
+ARM GAS  /tmp/ccBk6Q5S.s 			page 8
 
 
- 324              		.loc 1 81 9 is_stmt 1 view .LVU76
- 325              		.loc 1 81 24 is_stmt 0 view .LVU77
- 326 001e 90ED087A 		vldr.32	s14, [r0, #32]
- 327              		.loc 1 81 28 view .LVU78
- 328 0022 37EE877A 		vadd.f32	s14, s15, s14
- 329 0026 80ED087A 		vstr.32	s14, [r0, #32]
-  82:Core/Src/step_motor.c ****         step_motor->man[2] += step_motor->Slide_Dir * one_step;
- 330              		.loc 1 82 9 is_stmt 1 view .LVU79
- 331              		.loc 1 82 24 is_stmt 0 view .LVU80
- 332 002a 90ED097A 		vldr.32	s14, [r0, #36]
- 333              		.loc 1 82 28 view .LVU81
- 334 002e 77EE877A 		vadd.f32	s15, s15, s14
- 335 0032 C0ED097A 		vstr.32	s15, [r0, #36]
- 336              	.L28:
-  83:Core/Src/step_motor.c ****     }
-  84:Core/Src/step_motor.c **** }
- 337              		.loc 1 84 1 view .LVU82
- 338 0036 7047     		bx	lr
- 339              	.L31:
- 340              		.align	2
- 341              	.L30:
- 342 0038 1951F93D 		.word	1039749401
- 343              		.cfi_endproc
- 344              	.LFE142:
- 346              		.section	.text.init_pid,"ax",%progbits
- 347              		.align	1
- 348              		.global	init_pid
- 349              		.syntax unified
- 350              		.thumb
- 351              		.thumb_func
- 353              	init_pid:
- 354              	.LVL25:
- 355              	.LFB143:
-  85:Core/Src/step_motor.c **** 
-  86:Core/Src/step_motor.c **** /* ---------------------------------------------pi----------------------------------------------- *
-  87:Core/Src/step_motor.c **** 
-  88:Core/Src/step_motor.c **** void init_pid(PIDController *pid)
-  89:Core/Src/step_motor.c **** {
- 356              		.loc 1 89 1 is_stmt 1 view -0
- 357              		.cfi_startproc
- 358              		@ args = 0, pretend = 0, frame = 0
- 359              		@ frame_needed = 0, uses_anonymous_args = 0
-  90:Core/Src/step_motor.c ****     if (pid != NULL)
- 360              		.loc 1 90 5 view .LVU84
- 361              		.loc 1 90 8 is_stmt 0 view .LVU85
- 362 0000 B8B1     		cbz	r0, .L35
-  89:Core/Src/step_motor.c ****     if (pid != NULL)
- 363              		.loc 1 89 1 view .LVU86
- 364 0002 10B5     		push	{r4, lr}
- 365              	.LCFI6:
- 366              		.cfi_def_cfa_offset 8
- 367              		.cfi_offset 4, -8
- 368              		.cfi_offset 14, -4
- 369 0004 0446     		mov	r4, r0
-  91:Core/Src/step_motor.c ****     {
-  92:Core/Src/step_motor.c ****         pid->Ki = 1.0f;
- 370              		.loc 1 92 9 is_stmt 1 view .LVU87
-ARM GAS  /tmp/ccvv8Eal.s 			page 9
+ 325 000e 0BDA     		bge	.L34
+  81:Core/Src/step_motor.c ****     {
+  82:Core/Src/step_motor.c ****         stop_step_motor(two);
+  83:Core/Src/step_motor.c ****         stop_step_motor(three);
+  84:Core/Src/step_motor.c ****         return one;
+  85:Core/Src/step_motor.c ****     }
+  86:Core/Src/step_motor.c ****     else if (ball_coord->x > 207)
+ 326              		.loc 1 86 10 is_stmt 1 view .LVU74
+ 327              		.loc 1 86 13 is_stmt 0 view .LVU75
+ 328 0010 CF2B     		cmp	r3, #207
+ 329 0012 11DC     		bgt	.L35
+  87:Core/Src/step_motor.c ****     {
+  88:Core/Src/step_motor.c ****         stop_step_motor(one);
+  89:Core/Src/step_motor.c ****         stop_step_motor(three);
+  90:Core/Src/step_motor.c ****         return two;
+  91:Core/Src/step_motor.c ****     }
+  92:Core/Src/step_motor.c ****     else if (ball_coord->x > 0)
+ 330              		.loc 1 92 10 is_stmt 1 view .LVU76
+ 331              		.loc 1 92 13 is_stmt 0 view .LVU77
+ 332 0014 002B     		cmp	r3, #0
+ 333 0016 17DD     		ble	.L32
+  93:Core/Src/step_motor.c ****     {
+  94:Core/Src/step_motor.c ****         stop_step_motor(one);
+ 334              		.loc 1 94 9 is_stmt 1 view .LVU78
+ 335 0018 0846     		mov	r0, r1
+ 336              	.LVL25:
+ 337              		.loc 1 94 9 is_stmt 0 view .LVU79
+ 338 001a FFF7FEFF 		bl	stop_step_motor
+ 339              	.LVL26:
+  95:Core/Src/step_motor.c ****         stop_step_motor(two);
+ 340              		.loc 1 95 9 is_stmt 1 view .LVU80
+ 341 001e 2846     		mov	r0, r5
+ 342 0020 FFF7FEFF 		bl	stop_step_motor
+ 343              	.LVL27:
+  96:Core/Src/step_motor.c ****         return three;
+ 344              		.loc 1 96 9 view .LVU81
+ 345              		.loc 1 96 16 is_stmt 0 view .LVU82
+ 346 0024 2046     		mov	r0, r4
+ 347              	.L28:
+  97:Core/Src/step_motor.c ****     }
+  98:Core/Src/step_motor.c ****     else
+  99:Core/Src/step_motor.c ****     {
+ 100:Core/Src/step_motor.c ****         // x <= 0 的情況：全部停
+ 101:Core/Src/step_motor.c ****         stop_step_motor(one);
+ 102:Core/Src/step_motor.c ****         stop_step_motor(two);
+ 103:Core/Src/step_motor.c ****         stop_step_motor(three);
+ 104:Core/Src/step_motor.c ****         return NULL;
+ 105:Core/Src/step_motor.c ****     }
+ 106:Core/Src/step_motor.c **** }
+ 348              		.loc 1 106 1 view .LVU83
+ 349 0026 70BD     		pop	{r4, r5, r6, pc}
+ 350              	.LVL28:
+ 351              	.L34:
+  82:Core/Src/step_motor.c ****         stop_step_motor(three);
+ 352              		.loc 1 82 9 is_stmt 1 view .LVU84
+ 353 0028 1046     		mov	r0, r2
+ 354              	.LVL29:
+ARM GAS  /tmp/ccBk6Q5S.s 			page 9
 
 
- 371              		.loc 1 92 17 is_stmt 0 view .LVU88
- 372 0006 4FF07E53 		mov	r3, #1065353216
- 373 000a 4360     		str	r3, [r0, #4]	@ float
-  93:Core/Src/step_motor.c ****         pid->Kp = 80.0f;
- 374              		.loc 1 93 9 is_stmt 1 view .LVU89
- 375              		.loc 1 93 17 is_stmt 0 view .LVU90
- 376 000c 094B     		ldr	r3, .L38
- 377 000e 0360     		str	r3, [r0]	@ float
-  94:Core/Src/step_motor.c ****         pid->DT_SEC = 0.02f;
- 378              		.loc 1 94 9 is_stmt 1 view .LVU91
- 379              		.loc 1 94 21 is_stmt 0 view .LVU92
- 380 0010 094B     		ldr	r3, .L38+4
- 381 0012 0361     		str	r3, [r0, #16]	@ float
-  95:Core/Src/step_motor.c ****         pid->MAX_FREQ = 2000.0f;
- 382              		.loc 1 95 9 is_stmt 1 view .LVU93
- 383              		.loc 1 95 23 is_stmt 0 view .LVU94
- 384 0014 094B     		ldr	r3, .L38+8
- 385 0016 4361     		str	r3, [r0, #20]	@ float
-  96:Core/Src/step_motor.c ****         pid->DEAD_ZONE = 400.0f;
- 386              		.loc 1 96 9 is_stmt 1 view .LVU95
- 387              		.loc 1 96 24 is_stmt 0 view .LVU96
- 388 0018 094B     		ldr	r3, .L38+12
- 389 001a 8361     		str	r3, [r0, #24]	@ float
-  97:Core/Src/step_motor.c ****         pid->integral = 0.0f;
- 390              		.loc 1 97 9 is_stmt 1 view .LVU97
- 391              		.loc 1 97 23 is_stmt 0 view .LVU98
- 392 001c 0023     		movs	r3, #0
- 393 001e 8360     		str	r3, [r0, #8]	@ float
-  98:Core/Src/step_motor.c ****         pid->last_time = HAL_GetTick();
- 394              		.loc 1 98 9 is_stmt 1 view .LVU99
- 395              		.loc 1 98 26 is_stmt 0 view .LVU100
- 396 0020 FFF7FEFF 		bl	HAL_GetTick
- 397              	.LVL26:
- 398              		.loc 1 98 26 view .LVU101
- 399 0024 07EE900A 		vmov	s15, r0	@ int
- 400              		.loc 1 98 24 discriminator 1 view .LVU102
- 401 0028 F8EE677A 		vcvt.f32.u32	s15, s15
- 402 002c C4ED037A 		vstr.32	s15, [r4, #12]
-  99:Core/Src/step_motor.c ****     }
- 100:Core/Src/step_motor.c **** }
- 403              		.loc 1 100 1 view .LVU103
- 404 0030 10BD     		pop	{r4, pc}
- 405              	.LVL27:
- 406              	.L35:
- 407              	.LCFI7:
- 408              		.cfi_def_cfa_offset 0
- 409              		.cfi_restore 4
- 410              		.cfi_restore 14
- 411              		.loc 1 100 1 view .LVU104
- 412 0032 7047     		bx	lr
- 413              	.L39:
- 414              		.align	2
- 415              	.L38:
- 416 0034 0000A042 		.word	1117782016
- 417 0038 0AD7A33C 		.word	1017370378
- 418 003c 0000FA44 		.word	1157234688
- 419 0040 0000C843 		.word	1137180672
-ARM GAS  /tmp/ccvv8Eal.s 			page 10
+  82:Core/Src/step_motor.c ****         stop_step_motor(three);
+ 355              		.loc 1 82 9 is_stmt 0 view .LVU85
+ 356 002a FFF7FEFF 		bl	stop_step_motor
+ 357              	.LVL30:
+  83:Core/Src/step_motor.c ****         return one;
+ 358              		.loc 1 83 9 is_stmt 1 view .LVU86
+ 359 002e 2046     		mov	r0, r4
+ 360 0030 FFF7FEFF 		bl	stop_step_motor
+ 361              	.LVL31:
+  84:Core/Src/step_motor.c ****     }
+ 362              		.loc 1 84 9 view .LVU87
+  84:Core/Src/step_motor.c ****     }
+ 363              		.loc 1 84 16 is_stmt 0 view .LVU88
+ 364 0034 3046     		mov	r0, r6
+ 365 0036 F6E7     		b	.L28
+ 366              	.LVL32:
+ 367              	.L35:
+  88:Core/Src/step_motor.c ****         stop_step_motor(three);
+ 368              		.loc 1 88 9 is_stmt 1 view .LVU89
+ 369 0038 0846     		mov	r0, r1
+ 370              	.LVL33:
+  88:Core/Src/step_motor.c ****         stop_step_motor(three);
+ 371              		.loc 1 88 9 is_stmt 0 view .LVU90
+ 372 003a FFF7FEFF 		bl	stop_step_motor
+ 373              	.LVL34:
+  89:Core/Src/step_motor.c ****         return two;
+ 374              		.loc 1 89 9 is_stmt 1 view .LVU91
+ 375 003e 2046     		mov	r0, r4
+ 376 0040 FFF7FEFF 		bl	stop_step_motor
+ 377              	.LVL35:
+  90:Core/Src/step_motor.c ****     }
+ 378              		.loc 1 90 9 view .LVU92
+  90:Core/Src/step_motor.c ****     }
+ 379              		.loc 1 90 16 is_stmt 0 view .LVU93
+ 380 0044 2846     		mov	r0, r5
+ 381 0046 EEE7     		b	.L28
+ 382              	.LVL36:
+ 383              	.L32:
+ 101:Core/Src/step_motor.c ****         stop_step_motor(two);
+ 384              		.loc 1 101 9 is_stmt 1 view .LVU94
+ 385 0048 0846     		mov	r0, r1
+ 386              	.LVL37:
+ 101:Core/Src/step_motor.c ****         stop_step_motor(two);
+ 387              		.loc 1 101 9 is_stmt 0 view .LVU95
+ 388 004a FFF7FEFF 		bl	stop_step_motor
+ 389              	.LVL38:
+ 102:Core/Src/step_motor.c ****         stop_step_motor(three);
+ 390              		.loc 1 102 9 is_stmt 1 view .LVU96
+ 391 004e 2846     		mov	r0, r5
+ 392 0050 FFF7FEFF 		bl	stop_step_motor
+ 393              	.LVL39:
+ 103:Core/Src/step_motor.c ****         return NULL;
+ 394              		.loc 1 103 9 view .LVU97
+ 395 0054 2046     		mov	r0, r4
+ 396 0056 FFF7FEFF 		bl	stop_step_motor
+ 397              	.LVL40:
+ 104:Core/Src/step_motor.c ****     }
+ARM GAS  /tmp/ccBk6Q5S.s 			page 10
 
 
- 420              		.cfi_endproc
- 421              	.LFE143:
- 423              		.global	__aeabi_f2d
- 424              		.section	.rodata.PI_Update.str1.4,"aMS",%progbits,1
- 425              		.align	2
- 426              	.LC0:
- 427 0000 6572726F 		.ascii	"error: %.2f, integral: %.2f, output(freq): %.2f\015"
- 427      723A2025 
- 427      2E32662C 
- 427      20696E74 
- 427      65677261 
- 428 0030 0A00     		.ascii	"\012\000"
- 429              		.section	.text.PI_Update,"ax",%progbits
- 430              		.align	1
- 431              		.global	PI_Update
- 432              		.syntax unified
- 433              		.thumb
- 434              		.thumb_func
- 436              	PI_Update:
- 437              	.LVL28:
- 438              	.LFB144:
- 101:Core/Src/step_motor.c **** 
- 102:Core/Src/step_motor.c **** float PI_Update(PIDController *pid, float error)
- 103:Core/Src/step_motor.c **** {
- 439              		.loc 1 103 1 is_stmt 1 view -0
- 440              		.cfi_startproc
- 441              		@ args = 0, pretend = 0, frame = 0
- 442              		@ frame_needed = 0, uses_anonymous_args = 0
- 443              		.loc 1 103 1 is_stmt 0 view .LVU106
- 444 0000 30B5     		push	{r4, r5, lr}
- 445              	.LCFI8:
- 446              		.cfi_def_cfa_offset 12
- 447              		.cfi_offset 4, -12
- 448              		.cfi_offset 5, -8
- 449              		.cfi_offset 14, -4
- 450 0002 2DED048B 		vpush.64	{d8, d9}
- 451              	.LCFI9:
- 452              		.cfi_def_cfa_offset 28
- 453              		.cfi_offset 80, -28
- 454              		.cfi_offset 81, -24
- 455              		.cfi_offset 82, -20
- 456              		.cfi_offset 83, -16
- 457 0006 85B0     		sub	sp, sp, #20
- 458              	.LCFI10:
- 459              		.cfi_def_cfa_offset 48
- 460 0008 0446     		mov	r4, r0
- 461 000a B0EE409A 		vmov.f32	s18, s0
- 104:Core/Src/step_motor.c **** 
- 105:Core/Src/step_motor.c ****     // float error = result;
- 106:Core/Src/step_motor.c ****     // pid->integral += error * pid->DT_SEC;
+ 398              		.loc 1 104 9 view .LVU98
+ 104:Core/Src/step_motor.c ****     }
+ 399              		.loc 1 104 16 is_stmt 0 view .LVU99
+ 400 005a 0020     		movs	r0, #0
+ 401 005c E3E7     		b	.L28
+ 402              		.cfi_endproc
+ 403              	.LFE142:
+ 405              		.section	.text.compute_man_location,"ax",%progbits
+ 406              		.align	1
+ 407              		.global	compute_man_location
+ 408              		.syntax unified
+ 409              		.thumb
+ 410              		.thumb_func
+ 412              	compute_man_location:
+ 413              	.LVL41:
+ 414              	.LFB143:
  107:Core/Src/step_motor.c **** 
- 108:Core/Src/step_motor.c ****     // float output = pid->Kp * error + pid->Ki * pid->integral;
+ 108:Core/Src/step_motor.c **** /* ------------------------------------------判斷球在小人的哪個範圍---------------------
  109:Core/Src/step_motor.c **** 
- 110:Core/Src/step_motor.c ****     // // 安全限制
- 111:Core/Src/step_motor.c ****     // if (output > pid->MAX_FREQ)
- 112:Core/Src/step_motor.c ****     //     output = pid->MAX_FREQ;
- 113:Core/Src/step_motor.c ****     // if (output < -pid->MAX_FREQ)
-ARM GAS  /tmp/ccvv8Eal.s 			page 11
+ 110:Core/Src/step_motor.c **** /* ---------------------------------------------tim小人位置計算------------------------------
+ 111:Core/Src/step_motor.c **** void compute_man_location(Step_motor *step_motor)
+ 112:Core/Src/step_motor.c **** {
+ 415              		.loc 1 112 1 is_stmt 1 view -0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 0
+ 418              		@ frame_needed = 0, uses_anonymous_args = 0
+ 419              		@ link register save eliminated.
+ 113:Core/Src/step_motor.c ****     if (step_motor != NULL)
+ 420              		.loc 1 113 5 view .LVU101
+ 421              		.loc 1 113 8 is_stmt 0 view .LVU102
+ 422 0000 C8B1     		cbz	r0, .L36
+ 114:Core/Src/step_motor.c ****     {
+ 115:Core/Src/step_motor.c ****         step_motor->man[0] += step_motor->Slide_Dir * one_step;
+ 423              		.loc 1 115 9 is_stmt 1 view .LVU103
+ 424              		.loc 1 115 24 is_stmt 0 view .LVU104
+ 425 0002 90ED077A 		vldr.32	s14, [r0, #28]
+ 426              		.loc 1 115 53 view .LVU105
+ 427 0006 D0ED047A 		vldr.32	s15, [r0, #16]	@ int
+ 428 000a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 429 000e DFED0A6A 		vldr.32	s13, .L38
+ 430 0012 67EEA67A 		vmul.f32	s15, s15, s13
+ 431              		.loc 1 115 28 view .LVU106
+ 432 0016 37EE277A 		vadd.f32	s14, s14, s15
+ 433 001a 80ED077A 		vstr.32	s14, [r0, #28]
+ 116:Core/Src/step_motor.c ****         step_motor->man[1] += step_motor->Slide_Dir * one_step;
+ 434              		.loc 1 116 9 is_stmt 1 view .LVU107
+ 435              		.loc 1 116 24 is_stmt 0 view .LVU108
+ 436 001e 90ED087A 		vldr.32	s14, [r0, #32]
+ 437              		.loc 1 116 28 view .LVU109
+ 438 0022 37EE877A 		vadd.f32	s14, s15, s14
+ 439 0026 80ED087A 		vstr.32	s14, [r0, #32]
+ 117:Core/Src/step_motor.c ****         step_motor->man[2] += step_motor->Slide_Dir * one_step;
+ 440              		.loc 1 117 9 is_stmt 1 view .LVU110
+ 441              		.loc 1 117 24 is_stmt 0 view .LVU111
+ 442 002a 90ED097A 		vldr.32	s14, [r0, #36]
+ 443              		.loc 1 117 28 view .LVU112
+ 444 002e 77EE877A 		vadd.f32	s15, s15, s14
+ARM GAS  /tmp/ccBk6Q5S.s 			page 11
 
 
- 114:Core/Src/step_motor.c ****     //     output = -pid->MAX_FREQ;
- 115:Core/Src/step_motor.c ****     // if (fabs(output) < pid->DEAD_ZONE)
- 116:Core/Src/step_motor.c ****     //     output = 0;
- 117:Core/Src/step_motor.c **** 
- 118:Core/Src/step_motor.c ****     // return output;
- 119:Core/Src/step_motor.c **** 
- 120:Core/Src/step_motor.c ****     uint32_t now = HAL_GetTick();
- 462              		.loc 1 120 5 is_stmt 1 view .LVU107
- 463              		.loc 1 120 20 is_stmt 0 view .LVU108
- 464 000e FFF7FEFF 		bl	HAL_GetTick
- 465              	.LVL29:
- 466              		.loc 1 120 20 view .LVU109
- 467 0012 07EE100A 		vmov	s14, r0	@ int
- 468              	.LVL30:
- 121:Core/Src/step_motor.c ****     float dt = (now - pid->last_time) / 1000.0f; // 換算成秒
- 469              		.loc 1 121 5 is_stmt 1 view .LVU110
- 470              		.loc 1 121 21 is_stmt 0 view .LVU111
- 471 0016 B8EE477A 		vcvt.f32.u32	s14, s14
- 472              		.loc 1 121 26 view .LVU112
- 473 001a D4ED036A 		vldr.32	s13, [r4, #12]
- 474              		.loc 1 121 21 view .LVU113
- 475 001e 77EE666A 		vsub.f32	s13, s14, s13
- 476              		.loc 1 121 11 view .LVU114
- 477 0022 9FED2D6A 		vldr.32	s12, .L50
- 478 0026 C6EE867A 		vdiv.f32	s15, s13, s12
- 479              	.LVL31:
- 122:Core/Src/step_motor.c ****     pid->last_time = now;
- 480              		.loc 1 122 5 is_stmt 1 view .LVU115
- 481              		.loc 1 122 20 is_stmt 0 view .LVU116
- 482 002a 84ED037A 		vstr.32	s14, [r4, #12]
- 123:Core/Src/step_motor.c **** 
- 124:Core/Src/step_motor.c ****     if (dt <= 0.0f)
- 483              		.loc 1 124 5 is_stmt 1 view .LVU117
- 484              		.loc 1 124 8 is_stmt 0 view .LVU118
- 485 002e F5EEC07A 		vcmpe.f32	s15, #0
- 486 0032 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 487 0036 4BD9     		bls	.L49
- 488              	.LVL32:
- 489              	.L41:
- 125:Core/Src/step_motor.c ****         dt = 0.001f; // 避免除以0
- 126:Core/Src/step_motor.c **** 
- 127:Core/Src/step_motor.c ****     // 積分項累積誤差
- 128:Core/Src/step_motor.c ****     pid->integral += error * dt;
- 490              		.loc 1 128 5 is_stmt 1 view .LVU119
- 491              		.loc 1 128 8 is_stmt 0 view .LVU120
- 492 0038 D4ED028A 		vldr.32	s17, [r4, #8]
- 493              		.loc 1 128 28 view .LVU121
- 494 003c 67EE897A 		vmul.f32	s15, s15, s18
- 495              	.LVL33:
- 496              		.loc 1 128 19 view .LVU122
- 497 0040 78EEA78A 		vadd.f32	s17, s17, s15
- 498 0044 C4ED028A 		vstr.32	s17, [r4, #8]
- 129:Core/Src/step_motor.c **** 
- 130:Core/Src/step_motor.c ****     // PI 控制輸出
- 131:Core/Src/step_motor.c ****     float output = pid->Kp * error + pid->Ki * pid->integral;
- 499              		.loc 1 131 5 is_stmt 1 view .LVU123
- 500              		.loc 1 131 23 is_stmt 0 view .LVU124
-ARM GAS  /tmp/ccvv8Eal.s 			page 12
+ 445 0032 C0ED097A 		vstr.32	s15, [r0, #36]
+ 446              	.L36:
+ 118:Core/Src/step_motor.c ****     }
+ 119:Core/Src/step_motor.c **** }
+ 447              		.loc 1 119 1 view .LVU113
+ 448 0036 7047     		bx	lr
+ 449              	.L39:
+ 450              		.align	2
+ 451              	.L38:
+ 452 0038 1951F93D 		.word	1039749401
+ 453              		.cfi_endproc
+ 454              	.LFE143:
+ 456              		.section	.text.init_pid,"ax",%progbits
+ 457              		.align	1
+ 458              		.global	init_pid
+ 459              		.syntax unified
+ 460              		.thumb
+ 461              		.thumb_func
+ 463              	init_pid:
+ 464              	.LVL42:
+ 465              	.LFB144:
+ 120:Core/Src/step_motor.c **** 
+ 121:Core/Src/step_motor.c **** /* ---------------------------------------------pi----------------------------------------------- *
+ 122:Core/Src/step_motor.c **** 
+ 123:Core/Src/step_motor.c **** void init_pid(PIDController *pid)
+ 124:Core/Src/step_motor.c **** {
+ 466              		.loc 1 124 1 is_stmt 1 view -0
+ 467              		.cfi_startproc
+ 468              		@ args = 0, pretend = 0, frame = 0
+ 469              		@ frame_needed = 0, uses_anonymous_args = 0
+ 125:Core/Src/step_motor.c ****     if (pid != NULL)
+ 470              		.loc 1 125 5 view .LVU115
+ 471              		.loc 1 125 8 is_stmt 0 view .LVU116
+ 472 0000 B8B1     		cbz	r0, .L43
+ 124:Core/Src/step_motor.c ****     if (pid != NULL)
+ 473              		.loc 1 124 1 view .LVU117
+ 474 0002 10B5     		push	{r4, lr}
+ 475              	.LCFI7:
+ 476              		.cfi_def_cfa_offset 8
+ 477              		.cfi_offset 4, -8
+ 478              		.cfi_offset 14, -4
+ 479 0004 0446     		mov	r4, r0
+ 126:Core/Src/step_motor.c ****     {
+ 127:Core/Src/step_motor.c ****         pid->Ki = 1.0f;
+ 480              		.loc 1 127 9 is_stmt 1 view .LVU118
+ 481              		.loc 1 127 17 is_stmt 0 view .LVU119
+ 482 0006 4FF07E53 		mov	r3, #1065353216
+ 483 000a 4360     		str	r3, [r0, #4]	@ float
+ 128:Core/Src/step_motor.c ****         pid->Kp = 80.0f;
+ 484              		.loc 1 128 9 is_stmt 1 view .LVU120
+ 485              		.loc 1 128 17 is_stmt 0 view .LVU121
+ 486 000c 094B     		ldr	r3, .L46
+ 487 000e 0360     		str	r3, [r0]	@ float
+ 129:Core/Src/step_motor.c ****         pid->DT_SEC = 0.02f;
+ 488              		.loc 1 129 9 is_stmt 1 view .LVU122
+ 489              		.loc 1 129 21 is_stmt 0 view .LVU123
+ 490 0010 094B     		ldr	r3, .L46+4
+ARM GAS  /tmp/ccBk6Q5S.s 			page 12
 
 
- 501 0048 D4ED007A 		vldr.32	s15, [r4]
- 502              		.loc 1 131 28 view .LVU125
- 503 004c 67EE897A 		vmul.f32	s15, s15, s18
- 504              		.loc 1 131 41 view .LVU126
- 505 0050 94ED017A 		vldr.32	s14, [r4, #4]
- 506              		.loc 1 131 46 view .LVU127
- 507 0054 28EE877A 		vmul.f32	s14, s17, s14
- 508              		.loc 1 131 11 view .LVU128
- 509 0058 77EE877A 		vadd.f32	s15, s15, s14
- 510              	.LVL34:
- 132:Core/Src/step_motor.c **** 
- 133:Core/Src/step_motor.c ****     // 安全限制
- 134:Core/Src/step_motor.c ****     if (output > pid->MAX_FREQ)
- 511              		.loc 1 134 5 is_stmt 1 view .LVU129
- 512              		.loc 1 134 21 is_stmt 0 view .LVU130
- 513 005c 94ED058A 		vldr.32	s16, [r4, #20]
- 514              		.loc 1 134 8 view .LVU131
- 515 0060 B4EEE78A 		vcmpe.f32	s16, s15
- 516 0064 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 517 0068 01D5     		bpl	.L42
- 135:Core/Src/step_motor.c ****         output = pid->MAX_FREQ;
- 518              		.loc 1 135 16 view .LVU132
- 519 006a F0EE487A 		vmov.f32	s15, s16
- 520              	.LVL35:
- 521              	.L42:
- 136:Core/Src/step_motor.c ****     if (output < -pid->MAX_FREQ)
- 522              		.loc 1 136 5 is_stmt 1 view .LVU133
- 523              		.loc 1 136 18 is_stmt 0 view .LVU134
- 524 006e B1EE488A 		vneg.f32	s16, s16
- 525              		.loc 1 136 8 view .LVU135
- 526 0072 B4EEE78A 		vcmpe.f32	s16, s15
- 527 0076 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 528 007a 01DC     		bgt	.L43
- 529 007c B0EE678A 		vmov.f32	s16, s15
- 530              	.L43:
- 531              	.LVL36:
- 137:Core/Src/step_motor.c ****         output = -pid->MAX_FREQ;
- 138:Core/Src/step_motor.c ****     if (fabs(output) < pid->DEAD_ZONE)
- 532              		.loc 1 138 5 is_stmt 1 view .LVU136
- 533              		.loc 1 138 9 is_stmt 0 view .LVU137
- 534 0080 F0EEC87A 		vabs.f32	s15, s16
- 535              		.loc 1 138 27 view .LVU138
- 536 0084 94ED067A 		vldr.32	s14, [r4, #24]
- 537              		.loc 1 138 8 view .LVU139
- 538 0088 F4EEC77A 		vcmpe.f32	s15, s14
- 539 008c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 540 0090 01D5     		bpl	.L44
- 139:Core/Src/step_motor.c ****         output = 0;
- 541              		.loc 1 139 16 view .LVU140
- 542 0092 9FED128A 		vldr.32	s16, .L50+4
- 543              	.LVL37:
- 544              	.L44:
- 140:Core/Src/step_motor.c **** 
- 141:Core/Src/step_motor.c ****     printf("error: %.2f, integral: %.2f, output(freq): %.2f\r\n", error, pid->integral, output);
- 545              		.loc 1 141 5 is_stmt 1 view .LVU141
- 546 0096 19EE100A 		vmov	r0, s18
- 547              	.LVL38:
-ARM GAS  /tmp/ccvv8Eal.s 			page 13
+ 491 0012 0361     		str	r3, [r0, #16]	@ float
+ 130:Core/Src/step_motor.c ****         pid->MAX_FREQ = 2000.0f;
+ 492              		.loc 1 130 9 is_stmt 1 view .LVU124
+ 493              		.loc 1 130 23 is_stmt 0 view .LVU125
+ 494 0014 094B     		ldr	r3, .L46+8
+ 495 0016 4361     		str	r3, [r0, #20]	@ float
+ 131:Core/Src/step_motor.c ****         pid->DEAD_ZONE = 400.0f;
+ 496              		.loc 1 131 9 is_stmt 1 view .LVU126
+ 497              		.loc 1 131 24 is_stmt 0 view .LVU127
+ 498 0018 094B     		ldr	r3, .L46+12
+ 499 001a 8361     		str	r3, [r0, #24]	@ float
+ 132:Core/Src/step_motor.c ****         pid->integral = 0.0f;
+ 500              		.loc 1 132 9 is_stmt 1 view .LVU128
+ 501              		.loc 1 132 23 is_stmt 0 view .LVU129
+ 502 001c 0023     		movs	r3, #0
+ 503 001e 8360     		str	r3, [r0, #8]	@ float
+ 133:Core/Src/step_motor.c ****         pid->last_time = HAL_GetTick();
+ 504              		.loc 1 133 9 is_stmt 1 view .LVU130
+ 505              		.loc 1 133 26 is_stmt 0 view .LVU131
+ 506 0020 FFF7FEFF 		bl	HAL_GetTick
+ 507              	.LVL43:
+ 508              		.loc 1 133 26 view .LVU132
+ 509 0024 07EE900A 		vmov	s15, r0	@ int
+ 510              		.loc 1 133 24 discriminator 1 view .LVU133
+ 511 0028 F8EE677A 		vcvt.f32.u32	s15, s15
+ 512 002c C4ED037A 		vstr.32	s15, [r4, #12]
+ 134:Core/Src/step_motor.c ****     }
+ 135:Core/Src/step_motor.c **** }
+ 513              		.loc 1 135 1 view .LVU134
+ 514 0030 10BD     		pop	{r4, pc}
+ 515              	.LVL44:
+ 516              	.L43:
+ 517              	.LCFI8:
+ 518              		.cfi_def_cfa_offset 0
+ 519              		.cfi_restore 4
+ 520              		.cfi_restore 14
+ 521              		.loc 1 135 1 view .LVU135
+ 522 0032 7047     		bx	lr
+ 523              	.L47:
+ 524              		.align	2
+ 525              	.L46:
+ 526 0034 0000A042 		.word	1117782016
+ 527 0038 0AD7A33C 		.word	1017370378
+ 528 003c 0000FA44 		.word	1157234688
+ 529 0040 0000C843 		.word	1137180672
+ 530              		.cfi_endproc
+ 531              	.LFE144:
+ 533              		.global	__aeabi_f2d
+ 534              		.section	.rodata.PI_Update.str1.4,"aMS",%progbits,1
+ 535              		.align	2
+ 536              	.LC0:
+ 537 0000 6572726F 		.ascii	"error: %.2f, integral: %.2f, output(freq): %.2f\015"
+ 537      723A2025 
+ 537      2E32662C 
+ 537      20696E74 
+ 537      65677261 
+ 538 0030 0A00     		.ascii	"\012\000"
+ARM GAS  /tmp/ccBk6Q5S.s 			page 13
 
 
- 548              		.loc 1 141 5 is_stmt 0 view .LVU142
- 549 009a FFF7FEFF 		bl	__aeabi_f2d
- 550              	.LVL39:
- 551 009e 0446     		mov	r4, r0
- 552              	.LVL40:
- 553              		.loc 1 141 5 view .LVU143
- 554 00a0 0D46     		mov	r5, r1
- 555 00a2 18EE100A 		vmov	r0, s16
- 556 00a6 FFF7FEFF 		bl	__aeabi_f2d
- 557              	.LVL41:
- 558 00aa CDE90201 		strd	r0, [sp, #8]
- 559 00ae 18EE900A 		vmov	r0, s17
- 560 00b2 FFF7FEFF 		bl	__aeabi_f2d
- 561              	.LVL42:
- 562 00b6 CDE90001 		strd	r0, [sp]
- 563 00ba 2246     		mov	r2, r4
- 564 00bc 2B46     		mov	r3, r5
- 565 00be 0848     		ldr	r0, .L50+8
- 566 00c0 FFF7FEFF 		bl	printf
- 567              	.LVL43:
+ 539              		.section	.text.PI_Update,"ax",%progbits
+ 540              		.align	1
+ 541              		.global	PI_Update
+ 542              		.syntax unified
+ 543              		.thumb
+ 544              		.thumb_func
+ 546              	PI_Update:
+ 547              	.LVL45:
+ 548              	.LFB145:
+ 136:Core/Src/step_motor.c **** 
+ 137:Core/Src/step_motor.c **** float PI_Update(PIDController *pid, float error)
+ 138:Core/Src/step_motor.c **** {
+ 549              		.loc 1 138 1 is_stmt 1 view -0
+ 550              		.cfi_startproc
+ 551              		@ args = 0, pretend = 0, frame = 0
+ 552              		@ frame_needed = 0, uses_anonymous_args = 0
+ 553              		.loc 1 138 1 is_stmt 0 view .LVU137
+ 554 0000 30B5     		push	{r4, r5, lr}
+ 555              	.LCFI9:
+ 556              		.cfi_def_cfa_offset 12
+ 557              		.cfi_offset 4, -12
+ 558              		.cfi_offset 5, -8
+ 559              		.cfi_offset 14, -4
+ 560 0002 2DED048B 		vpush.64	{d8, d9}
+ 561              	.LCFI10:
+ 562              		.cfi_def_cfa_offset 28
+ 563              		.cfi_offset 80, -28
+ 564              		.cfi_offset 81, -24
+ 565              		.cfi_offset 82, -20
+ 566              		.cfi_offset 83, -16
+ 567 0006 85B0     		sub	sp, sp, #20
+ 568              	.LCFI11:
+ 569              		.cfi_def_cfa_offset 48
+ 570 0008 0446     		mov	r4, r0
+ 571 000a B0EE409A 		vmov.f32	s18, s0
+ 139:Core/Src/step_motor.c **** 
+ 140:Core/Src/step_motor.c ****     // float error = result;
+ 141:Core/Src/step_motor.c ****     // pid->integral += error * pid->DT_SEC;
  142:Core/Src/step_motor.c **** 
- 143:Core/Src/step_motor.c ****     return output;
- 568              		.loc 1 143 5 is_stmt 1 view .LVU144
- 144:Core/Src/step_motor.c **** }
- 569              		.loc 1 144 1 is_stmt 0 view .LVU145
- 570 00c4 B0EE480A 		vmov.f32	s0, s16
- 571 00c8 05B0     		add	sp, sp, #20
- 572              	.LCFI11:
- 573              		.cfi_remember_state
- 574              		.cfi_def_cfa_offset 28
- 575              		@ sp needed
- 576 00ca BDEC048B 		vldm	sp!, {d8-d9}
- 577              	.LCFI12:
- 578              		.cfi_restore 82
- 579              		.cfi_restore 83
- 580              		.cfi_restore 80
- 581              		.cfi_restore 81
- 582              		.cfi_def_cfa_offset 12
- 583              	.LVL44:
- 584              		.loc 1 144 1 view .LVU146
- 585 00ce 30BD     		pop	{r4, r5, pc}
- 586              	.LVL45:
- 587              	.L49:
- 588              	.LCFI13:
- 589              		.cfi_restore_state
- 125:Core/Src/step_motor.c **** 
- 590              		.loc 1 125 12 view .LVU147
- 591 00d0 DFED047A 		vldr.32	s15, .L50+12
- 592              	.LVL46:
- 125:Core/Src/step_motor.c **** 
- 593              		.loc 1 125 12 view .LVU148
- 594 00d4 B0E7     		b	.L41
- 595              	.L51:
- 596 00d6 00BF     		.align	2
- 597              	.L50:
- 598 00d8 00007A44 		.word	1148846080
- 599 00dc 00000000 		.word	0
-ARM GAS  /tmp/ccvv8Eal.s 			page 14
+ 143:Core/Src/step_motor.c ****     // float output = pid->Kp * error + pid->Ki * pid->integral;
+ 144:Core/Src/step_motor.c **** 
+ 145:Core/Src/step_motor.c ****     // // 安全限制
+ 146:Core/Src/step_motor.c ****     // if (output > pid->MAX_FREQ)
+ 147:Core/Src/step_motor.c ****     //     output = pid->MAX_FREQ;
+ 148:Core/Src/step_motor.c ****     // if (output < -pid->MAX_FREQ)
+ 149:Core/Src/step_motor.c ****     //     output = -pid->MAX_FREQ;
+ 150:Core/Src/step_motor.c ****     // if (fabs(output) < pid->DEAD_ZONE)
+ 151:Core/Src/step_motor.c ****     //     output = 0;
+ 152:Core/Src/step_motor.c **** 
+ 153:Core/Src/step_motor.c ****     // return output;
+ 154:Core/Src/step_motor.c **** 
+ 155:Core/Src/step_motor.c ****     uint32_t now = HAL_GetTick();
+ 572              		.loc 1 155 5 is_stmt 1 view .LVU138
+ 573              		.loc 1 155 20 is_stmt 0 view .LVU139
+ 574 000e FFF7FEFF 		bl	HAL_GetTick
+ 575              	.LVL46:
+ 576              		.loc 1 155 20 view .LVU140
+ARM GAS  /tmp/ccBk6Q5S.s 			page 14
 
 
- 600 00e0 00000000 		.word	.LC0
- 601 00e4 6F12833A 		.word	981668463
- 602              		.cfi_endproc
- 603              	.LFE144:
- 605              		.section	.text.Set_Step_Frequency,"ax",%progbits
- 606              		.align	1
- 607              		.global	Set_Step_Frequency
- 608              		.syntax unified
- 609              		.thumb
- 610              		.thumb_func
- 612              	Set_Step_Frequency:
- 613              	.LVL47:
- 614              	.LFB145:
- 145:Core/Src/step_motor.c **** 
- 146:Core/Src/step_motor.c **** void Set_Step_Frequency(Step_motor *man, float freq)
- 147:Core/Src/step_motor.c **** {
- 615              		.loc 1 147 1 is_stmt 1 view -0
- 616              		.cfi_startproc
- 617              		@ args = 0, pretend = 0, frame = 0
- 618              		@ frame_needed = 0, uses_anonymous_args = 0
- 619              		@ link register save eliminated.
- 148:Core/Src/step_motor.c ****     if (man == NULL)
- 620              		.loc 1 148 5 view .LVU150
- 621              		.loc 1 148 8 is_stmt 0 view .LVU151
- 622 0000 0246     		mov	r2, r0
- 623 0002 F8B1     		cbz	r0, .L52
- 149:Core/Src/step_motor.c ****     {
- 150:Core/Src/step_motor.c ****         // printf("Error: ball_in_man_range is NULL\n");
- 151:Core/Src/step_motor.c ****         return; // 或其他默認值
- 152:Core/Src/step_motor.c ****     }
- 153:Core/Src/step_motor.c ****     float abs_freq = fabs(freq);
- 624              		.loc 1 153 5 is_stmt 1 view .LVU152
- 625              		.loc 1 153 11 is_stmt 0 view .LVU153
- 626 0004 B0EEC07A 		vabs.f32	s14, s0
- 627              	.LVL48:
- 154:Core/Src/step_motor.c ****     uint32_t arr;
- 628              		.loc 1 154 5 is_stmt 1 view .LVU154
- 155:Core/Src/step_motor.c **** 
- 156:Core/Src/step_motor.c ****     if (abs_freq == 0)
- 629              		.loc 1 156 5 view .LVU155
- 630              		.loc 1 156 8 is_stmt 0 view .LVU156
- 631 0008 B5EE400A 		vcmp.f32	s0, #0
- 632 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 633 0010 19D0     		beq	.L63
- 157:Core/Src/step_motor.c ****     {
- 158:Core/Src/step_motor.c ****         // 關閉 PWM 輸出
- 159:Core/Src/step_motor.c ****         __HAL_TIM_SET_COMPARE(man->Slide_htim, man->Slide_Channel, 0);
- 160:Core/Src/step_motor.c ****         return;
- 161:Core/Src/step_motor.c ****     }
- 162:Core/Src/step_motor.c **** 
- 163:Core/Src/step_motor.c ****     // 計算對應 ARR（假設 TIM2 用 1MHz）
- 164:Core/Src/step_motor.c ****     arr = 1000000 / abs_freq;
- 634              		.loc 1 164 5 is_stmt 1 view .LVU157
- 635              		.loc 1 164 19 is_stmt 0 view .LVU158
- 636 0012 DFED236A 		vldr.32	s13, .L68
- 637 0016 C6EE877A 		vdiv.f32	s15, s13, s14
- 638              		.loc 1 164 9 view .LVU159
-ARM GAS  /tmp/ccvv8Eal.s 			page 15
+ 577 0012 07EE100A 		vmov	s14, r0	@ int
+ 578              	.LVL47:
+ 156:Core/Src/step_motor.c ****     float dt = (now - pid->last_time) / 1000.0f; // 換算成秒
+ 579              		.loc 1 156 5 is_stmt 1 view .LVU141
+ 580              		.loc 1 156 21 is_stmt 0 view .LVU142
+ 581 0016 B8EE477A 		vcvt.f32.u32	s14, s14
+ 582              		.loc 1 156 26 view .LVU143
+ 583 001a D4ED036A 		vldr.32	s13, [r4, #12]
+ 584              		.loc 1 156 21 view .LVU144
+ 585 001e 77EE666A 		vsub.f32	s13, s14, s13
+ 586              		.loc 1 156 11 view .LVU145
+ 587 0022 9FED2D6A 		vldr.32	s12, .L58
+ 588 0026 C6EE867A 		vdiv.f32	s15, s13, s12
+ 589              	.LVL48:
+ 157:Core/Src/step_motor.c ****     pid->last_time = now;
+ 590              		.loc 1 157 5 is_stmt 1 view .LVU146
+ 591              		.loc 1 157 20 is_stmt 0 view .LVU147
+ 592 002a 84ED037A 		vstr.32	s14, [r4, #12]
+ 158:Core/Src/step_motor.c **** 
+ 159:Core/Src/step_motor.c ****     if (dt <= 0.0f)
+ 593              		.loc 1 159 5 is_stmt 1 view .LVU148
+ 594              		.loc 1 159 8 is_stmt 0 view .LVU149
+ 595 002e F5EEC07A 		vcmpe.f32	s15, #0
+ 596 0032 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 597 0036 4BD9     		bls	.L57
+ 598              	.LVL49:
+ 599              	.L49:
+ 160:Core/Src/step_motor.c ****         dt = 0.001f; // 避免除以0
+ 161:Core/Src/step_motor.c **** 
+ 162:Core/Src/step_motor.c ****     // 積分項累積誤差
+ 163:Core/Src/step_motor.c ****     pid->integral += error * dt;
+ 600              		.loc 1 163 5 is_stmt 1 view .LVU150
+ 601              		.loc 1 163 8 is_stmt 0 view .LVU151
+ 602 0038 D4ED028A 		vldr.32	s17, [r4, #8]
+ 603              		.loc 1 163 28 view .LVU152
+ 604 003c 67EE897A 		vmul.f32	s15, s15, s18
+ 605              	.LVL50:
+ 606              		.loc 1 163 19 view .LVU153
+ 607 0040 78EEA78A 		vadd.f32	s17, s17, s15
+ 608 0044 C4ED028A 		vstr.32	s17, [r4, #8]
+ 164:Core/Src/step_motor.c **** 
+ 165:Core/Src/step_motor.c ****     // PI 控制輸出
+ 166:Core/Src/step_motor.c ****     float output = pid->Kp * error + pid->Ki * pid->integral;
+ 609              		.loc 1 166 5 is_stmt 1 view .LVU154
+ 610              		.loc 1 166 23 is_stmt 0 view .LVU155
+ 611 0048 D4ED007A 		vldr.32	s15, [r4]
+ 612              		.loc 1 166 28 view .LVU156
+ 613 004c 67EE897A 		vmul.f32	s15, s15, s18
+ 614              		.loc 1 166 41 view .LVU157
+ 615 0050 94ED017A 		vldr.32	s14, [r4, #4]
+ 616              		.loc 1 166 46 view .LVU158
+ 617 0054 28EE877A 		vmul.f32	s14, s17, s14
+ 618              		.loc 1 166 11 view .LVU159
+ 619 0058 77EE877A 		vadd.f32	s15, s15, s14
+ 620              	.LVL51:
+ 167:Core/Src/step_motor.c **** 
+ 168:Core/Src/step_motor.c ****     // 安全限制
+ARM GAS  /tmp/ccBk6Q5S.s 			page 15
 
 
- 639 001a FCEEE77A 		vcvt.u32.f32	s15, s15
- 640 001e 17EE903A 		vmov	r3, s15	@ int
- 641              	.LVL49:
- 165:Core/Src/step_motor.c ****     __HAL_TIM_SET_AUTORELOAD(man->Slide_htim, arr);
- 642              		.loc 1 165 5 is_stmt 1 view .LVU160
- 643              		.loc 1 165 5 view .LVU161
- 644 0022 0168     		ldr	r1, [r0]
- 645 0024 0968     		ldr	r1, [r1]
- 646 0026 C1ED0B7A 		vstr.32	s15, [r1, #44]	@ int
- 647              		.loc 1 165 5 view .LVU162
- 648 002a 0168     		ldr	r1, [r0]
- 649 002c C1ED037A 		vstr.32	s15, [r1, #12]	@ int
- 650              		.loc 1 165 5 view .LVU163
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COMPARE(man->Slide_htim, man->Slide_Channel, arr / 2);
- 651              		.loc 1 166 5 view .LVU164
- 652 0030 4168     		ldr	r1, [r0, #4]
- 653 0032 11BB     		cbnz	r1, .L59
- 654              		.loc 1 166 5 is_stmt 0 discriminator 1 view .LVU165
- 655 0034 0168     		ldr	r1, [r0]
- 656 0036 0968     		ldr	r1, [r1]
- 657 0038 5B08     		lsrs	r3, r3, #1
- 658              	.LVL50:
- 659              		.loc 1 166 5 discriminator 1 view .LVU166
- 660 003a 4B63     		str	r3, [r1, #52]
- 661              	.L60:
- 167:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 662              		.loc 1 167 5 is_stmt 1 view .LVU167
- 663 003c 1368     		ldr	r3, [r2]
- 664 003e 1B68     		ldr	r3, [r3]
- 665 0040 0022     		movs	r2, #0
- 666 0042 5A62     		str	r2, [r3, #36]
- 667              	.LVL51:
- 668              	.L52:
- 168:Core/Src/step_motor.c **** }
- 669              		.loc 1 168 1 is_stmt 0 view .LVU168
- 670 0044 7047     		bx	lr
- 671              	.LVL52:
- 672              	.L63:
- 159:Core/Src/step_motor.c ****         return;
- 673              		.loc 1 159 9 is_stmt 1 view .LVU169
- 674 0046 4368     		ldr	r3, [r0, #4]
- 675 0048 23B9     		cbnz	r3, .L55
- 159:Core/Src/step_motor.c ****         return;
- 676              		.loc 1 159 9 is_stmt 0 discriminator 1 view .LVU170
- 677 004a 0368     		ldr	r3, [r0]
- 678 004c 1B68     		ldr	r3, [r3]
- 679 004e 0022     		movs	r2, #0
- 680 0050 5A63     		str	r2, [r3, #52]
- 681 0052 7047     		bx	lr
- 682              	.L55:
- 159:Core/Src/step_motor.c ****         return;
- 683              		.loc 1 159 9 discriminator 2 view .LVU171
- 684 0054 042B     		cmp	r3, #4
- 685 0056 06D0     		beq	.L64
- 159:Core/Src/step_motor.c ****         return;
- 686              		.loc 1 159 9 discriminator 4 view .LVU172
- 687 0058 082B     		cmp	r3, #8
-ARM GAS  /tmp/ccvv8Eal.s 			page 16
+ 169:Core/Src/step_motor.c ****     if (output > pid->MAX_FREQ)
+ 621              		.loc 1 169 5 is_stmt 1 view .LVU160
+ 622              		.loc 1 169 21 is_stmt 0 view .LVU161
+ 623 005c 94ED058A 		vldr.32	s16, [r4, #20]
+ 624              		.loc 1 169 8 view .LVU162
+ 625 0060 B4EEE78A 		vcmpe.f32	s16, s15
+ 626 0064 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 627 0068 01D5     		bpl	.L50
+ 170:Core/Src/step_motor.c ****         output = pid->MAX_FREQ;
+ 628              		.loc 1 170 16 view .LVU163
+ 629 006a F0EE487A 		vmov.f32	s15, s16
+ 630              	.LVL52:
+ 631              	.L50:
+ 171:Core/Src/step_motor.c ****     if (output < -pid->MAX_FREQ)
+ 632              		.loc 1 171 5 is_stmt 1 view .LVU164
+ 633              		.loc 1 171 18 is_stmt 0 view .LVU165
+ 634 006e B1EE488A 		vneg.f32	s16, s16
+ 635              		.loc 1 171 8 view .LVU166
+ 636 0072 B4EEE78A 		vcmpe.f32	s16, s15
+ 637 0076 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 638 007a 01DC     		bgt	.L51
+ 639 007c B0EE678A 		vmov.f32	s16, s15
+ 640              	.L51:
+ 641              	.LVL53:
+ 172:Core/Src/step_motor.c ****         output = -pid->MAX_FREQ;
+ 173:Core/Src/step_motor.c ****     if (fabs(output) < pid->DEAD_ZONE)
+ 642              		.loc 1 173 5 is_stmt 1 view .LVU167
+ 643              		.loc 1 173 9 is_stmt 0 view .LVU168
+ 644 0080 F0EEC87A 		vabs.f32	s15, s16
+ 645              		.loc 1 173 27 view .LVU169
+ 646 0084 94ED067A 		vldr.32	s14, [r4, #24]
+ 647              		.loc 1 173 8 view .LVU170
+ 648 0088 F4EEC77A 		vcmpe.f32	s15, s14
+ 649 008c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 650 0090 01D5     		bpl	.L52
+ 174:Core/Src/step_motor.c ****         output = 0;
+ 651              		.loc 1 174 16 view .LVU171
+ 652 0092 9FED128A 		vldr.32	s16, .L58+4
+ 653              	.LVL54:
+ 654              	.L52:
+ 175:Core/Src/step_motor.c **** 
+ 176:Core/Src/step_motor.c ****     printf("error: %.2f, integral: %.2f, output(freq): %.2f\r\n", error, pid->integral, output);
+ 655              		.loc 1 176 5 is_stmt 1 view .LVU172
+ 656 0096 19EE100A 		vmov	r0, s18
+ 657              	.LVL55:
+ 658              		.loc 1 176 5 is_stmt 0 view .LVU173
+ 659 009a FFF7FEFF 		bl	__aeabi_f2d
+ 660              	.LVL56:
+ 661 009e 0446     		mov	r4, r0
+ 662              	.LVL57:
+ 663              		.loc 1 176 5 view .LVU174
+ 664 00a0 0D46     		mov	r5, r1
+ 665 00a2 18EE100A 		vmov	r0, s16
+ 666 00a6 FFF7FEFF 		bl	__aeabi_f2d
+ 667              	.LVL58:
+ 668 00aa CDE90201 		strd	r0, [sp, #8]
+ 669 00ae 18EE900A 		vmov	r0, s17
+ARM GAS  /tmp/ccBk6Q5S.s 			page 16
 
 
- 688 005a 09D0     		beq	.L65
- 159:Core/Src/step_motor.c ****         return;
- 689              		.loc 1 159 9 discriminator 7 view .LVU173
- 690 005c 0368     		ldr	r3, [r0]
- 691 005e 1B68     		ldr	r3, [r3]
- 692 0060 0022     		movs	r2, #0
- 693 0062 1A64     		str	r2, [r3, #64]
- 160:Core/Src/step_motor.c ****     }
- 694              		.loc 1 160 9 is_stmt 1 view .LVU174
- 695 0064 7047     		bx	lr
- 696              	.L64:
- 159:Core/Src/step_motor.c ****         return;
- 697              		.loc 1 159 9 is_stmt 0 discriminator 3 view .LVU175
- 698 0066 0368     		ldr	r3, [r0]
- 699 0068 1B68     		ldr	r3, [r3]
- 700 006a 0022     		movs	r2, #0
- 701 006c 9A63     		str	r2, [r3, #56]
- 702 006e 7047     		bx	lr
- 703              	.L65:
- 159:Core/Src/step_motor.c ****         return;
- 704              		.loc 1 159 9 discriminator 6 view .LVU176
- 705 0070 0368     		ldr	r3, [r0]
- 706 0072 1B68     		ldr	r3, [r3]
- 707 0074 0022     		movs	r2, #0
- 708 0076 DA63     		str	r2, [r3, #60]
- 709 0078 7047     		bx	lr
- 710              	.LVL53:
- 711              	.L59:
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 712              		.loc 1 166 5 discriminator 2 view .LVU177
- 713 007a 0429     		cmp	r1, #4
- 714 007c 06D0     		beq	.L66
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 715              		.loc 1 166 5 discriminator 4 view .LVU178
- 716 007e 0829     		cmp	r1, #8
- 717 0080 09D0     		beq	.L67
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 718              		.loc 1 166 5 discriminator 7 view .LVU179
- 719 0082 0168     		ldr	r1, [r0]
- 720 0084 0968     		ldr	r1, [r1]
- 721 0086 5B08     		lsrs	r3, r3, #1
- 722              	.LVL54:
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 723              		.loc 1 166 5 discriminator 7 view .LVU180
- 724 0088 0B64     		str	r3, [r1, #64]
- 725 008a D7E7     		b	.L60
- 726              	.LVL55:
- 727              	.L66:
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 728              		.loc 1 166 5 discriminator 3 view .LVU181
- 729 008c 0168     		ldr	r1, [r0]
- 730 008e 0968     		ldr	r1, [r1]
- 731 0090 5B08     		lsrs	r3, r3, #1
- 732              	.LVL56:
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 733              		.loc 1 166 5 discriminator 3 view .LVU182
- 734 0092 8B63     		str	r3, [r1, #56]
-ARM GAS  /tmp/ccvv8Eal.s 			page 17
+ 670 00b2 FFF7FEFF 		bl	__aeabi_f2d
+ 671              	.LVL59:
+ 672 00b6 CDE90001 		strd	r0, [sp]
+ 673 00ba 2246     		mov	r2, r4
+ 674 00bc 2B46     		mov	r3, r5
+ 675 00be 0848     		ldr	r0, .L58+8
+ 676 00c0 FFF7FEFF 		bl	printf
+ 677              	.LVL60:
+ 177:Core/Src/step_motor.c **** 
+ 178:Core/Src/step_motor.c ****     return output;
+ 678              		.loc 1 178 5 is_stmt 1 view .LVU175
+ 179:Core/Src/step_motor.c **** }
+ 679              		.loc 1 179 1 is_stmt 0 view .LVU176
+ 680 00c4 B0EE480A 		vmov.f32	s0, s16
+ 681 00c8 05B0     		add	sp, sp, #20
+ 682              	.LCFI12:
+ 683              		.cfi_remember_state
+ 684              		.cfi_def_cfa_offset 28
+ 685              		@ sp needed
+ 686 00ca BDEC048B 		vldm	sp!, {d8-d9}
+ 687              	.LCFI13:
+ 688              		.cfi_restore 82
+ 689              		.cfi_restore 83
+ 690              		.cfi_restore 80
+ 691              		.cfi_restore 81
+ 692              		.cfi_def_cfa_offset 12
+ 693              	.LVL61:
+ 694              		.loc 1 179 1 view .LVU177
+ 695 00ce 30BD     		pop	{r4, r5, pc}
+ 696              	.LVL62:
+ 697              	.L57:
+ 698              	.LCFI14:
+ 699              		.cfi_restore_state
+ 160:Core/Src/step_motor.c **** 
+ 700              		.loc 1 160 12 view .LVU178
+ 701 00d0 DFED047A 		vldr.32	s15, .L58+12
+ 702              	.LVL63:
+ 160:Core/Src/step_motor.c **** 
+ 703              		.loc 1 160 12 view .LVU179
+ 704 00d4 B0E7     		b	.L49
+ 705              	.L59:
+ 706 00d6 00BF     		.align	2
+ 707              	.L58:
+ 708 00d8 00007A44 		.word	1148846080
+ 709 00dc 00000000 		.word	0
+ 710 00e0 00000000 		.word	.LC0
+ 711 00e4 6F12833A 		.word	981668463
+ 712              		.cfi_endproc
+ 713              	.LFE145:
+ 715              		.section	.text.Set_Step_Frequency,"ax",%progbits
+ 716              		.align	1
+ 717              		.global	Set_Step_Frequency
+ 718              		.syntax unified
+ 719              		.thumb
+ 720              		.thumb_func
+ 722              	Set_Step_Frequency:
+ 723              	.LVL64:
+ARM GAS  /tmp/ccBk6Q5S.s 			page 17
 
 
- 735 0094 D2E7     		b	.L60
- 736              	.LVL57:
- 737              	.L67:
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 738              		.loc 1 166 5 discriminator 6 view .LVU183
- 739 0096 0168     		ldr	r1, [r0]
- 740 0098 0968     		ldr	r1, [r1]
- 741 009a 5B08     		lsrs	r3, r3, #1
- 742              	.LVL58:
- 166:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
- 743              		.loc 1 166 5 discriminator 6 view .LVU184
- 744 009c CB63     		str	r3, [r1, #60]
- 745 009e CDE7     		b	.L60
- 746              	.L69:
- 747              		.align	2
- 748              	.L68:
- 749 00a0 00247449 		.word	1232348160
- 750              		.cfi_endproc
- 751              	.LFE145:
- 753              		.global	one_step
- 754              		.section	.rodata.one_step,"a"
- 755              		.align	2
- 758              	one_step:
- 759 0000 1951F93D 		.word	1039749401
- 760              		.global	man_range2
- 761              		.section	.rodata.man_range2,"a"
- 762              		.align	2
- 765              	man_range2:
- 766 0000 C8000000 		.word	200
- 767              		.global	man_range1
- 768              		.section	.rodata.man_range1,"a"
- 769              		.align	2
- 772              	man_range1:
- 773 0000 64000000 		.word	100
- 774              		.global	MY_PI
- 775              		.section	.rodata.MY_PI,"a"
- 776              		.align	3
- 779              	MY_PI:
- 780 0000 182D4454 		.word	1413754136
- 781 0004 FB210940 		.word	1074340347
- 782              		.text
- 783              	.Letext0:
- 784              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
- 785              		.file 3 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
- 786              		.file 4 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 787              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
- 788              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 789              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
- 790              		.file 8 "Core/Inc/step_motor.h"
- 791              		.file 9 "/usr/include/newlib/stdio.h"
- 792              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  /tmp/ccvv8Eal.s 			page 18
+ 724              	.LFB146:
+ 180:Core/Src/step_motor.c **** 
+ 181:Core/Src/step_motor.c **** void Set_Step_Frequency(Step_motor *man, float freq)
+ 182:Core/Src/step_motor.c **** {
+ 725              		.loc 1 182 1 is_stmt 1 view -0
+ 726              		.cfi_startproc
+ 727              		@ args = 0, pretend = 0, frame = 0
+ 728              		@ frame_needed = 0, uses_anonymous_args = 0
+ 729              		@ link register save eliminated.
+ 183:Core/Src/step_motor.c ****     if (man == NULL)
+ 730              		.loc 1 183 5 view .LVU181
+ 731              		.loc 1 183 8 is_stmt 0 view .LVU182
+ 732 0000 0246     		mov	r2, r0
+ 733 0002 F8B1     		cbz	r0, .L60
+ 184:Core/Src/step_motor.c ****     {
+ 185:Core/Src/step_motor.c ****         // printf("Error: ball_in_man_range is NULL\n");
+ 186:Core/Src/step_motor.c ****         return; // 或其他默認值
+ 187:Core/Src/step_motor.c ****     }
+ 188:Core/Src/step_motor.c ****     float abs_freq = fabs(freq);
+ 734              		.loc 1 188 5 is_stmt 1 view .LVU183
+ 735              		.loc 1 188 11 is_stmt 0 view .LVU184
+ 736 0004 B0EEC07A 		vabs.f32	s14, s0
+ 737              	.LVL65:
+ 189:Core/Src/step_motor.c ****     uint32_t arr;
+ 738              		.loc 1 189 5 is_stmt 1 view .LVU185
+ 190:Core/Src/step_motor.c **** 
+ 191:Core/Src/step_motor.c ****     if (abs_freq == 0)
+ 739              		.loc 1 191 5 view .LVU186
+ 740              		.loc 1 191 8 is_stmt 0 view .LVU187
+ 741 0008 B5EE400A 		vcmp.f32	s0, #0
+ 742 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 743 0010 19D0     		beq	.L71
+ 192:Core/Src/step_motor.c ****     {
+ 193:Core/Src/step_motor.c ****         // 關閉 PWM 輸出
+ 194:Core/Src/step_motor.c ****         __HAL_TIM_SET_COMPARE(man->Slide_htim, man->Slide_Channel, 0);
+ 195:Core/Src/step_motor.c ****         return;
+ 196:Core/Src/step_motor.c ****     }
+ 197:Core/Src/step_motor.c **** 
+ 198:Core/Src/step_motor.c ****     // 計算對應 ARR（假設 TIM2 用 1MHz）
+ 199:Core/Src/step_motor.c ****     arr = 1000000 / abs_freq;
+ 744              		.loc 1 199 5 is_stmt 1 view .LVU188
+ 745              		.loc 1 199 19 is_stmt 0 view .LVU189
+ 746 0012 DFED236A 		vldr.32	s13, .L76
+ 747 0016 C6EE877A 		vdiv.f32	s15, s13, s14
+ 748              		.loc 1 199 9 view .LVU190
+ 749 001a FCEEE77A 		vcvt.u32.f32	s15, s15
+ 750 001e 17EE903A 		vmov	r3, s15	@ int
+ 751              	.LVL66:
+ 200:Core/Src/step_motor.c ****     __HAL_TIM_SET_AUTORELOAD(man->Slide_htim, arr);
+ 752              		.loc 1 200 5 is_stmt 1 view .LVU191
+ 753              		.loc 1 200 5 view .LVU192
+ 754 0022 0168     		ldr	r1, [r0]
+ 755 0024 0968     		ldr	r1, [r1]
+ 756 0026 C1ED0B7A 		vstr.32	s15, [r1, #44]	@ int
+ 757              		.loc 1 200 5 view .LVU193
+ 758 002a 0168     		ldr	r1, [r0]
+ 759 002c C1ED037A 		vstr.32	s15, [r1, #12]	@ int
+ARM GAS  /tmp/ccBk6Q5S.s 			page 18
+
+
+ 760              		.loc 1 200 5 view .LVU194
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COMPARE(man->Slide_htim, man->Slide_Channel, arr / 2);
+ 761              		.loc 1 201 5 view .LVU195
+ 762 0030 4168     		ldr	r1, [r0, #4]
+ 763 0032 11BB     		cbnz	r1, .L67
+ 764              		.loc 1 201 5 is_stmt 0 discriminator 1 view .LVU196
+ 765 0034 0168     		ldr	r1, [r0]
+ 766 0036 0968     		ldr	r1, [r1]
+ 767 0038 5B08     		lsrs	r3, r3, #1
+ 768              	.LVL67:
+ 769              		.loc 1 201 5 discriminator 1 view .LVU197
+ 770 003a 4B63     		str	r3, [r1, #52]
+ 771              	.L68:
+ 202:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 772              		.loc 1 202 5 is_stmt 1 view .LVU198
+ 773 003c 1368     		ldr	r3, [r2]
+ 774 003e 1B68     		ldr	r3, [r3]
+ 775 0040 0022     		movs	r2, #0
+ 776 0042 5A62     		str	r2, [r3, #36]
+ 777              	.LVL68:
+ 778              	.L60:
+ 203:Core/Src/step_motor.c **** }
+ 779              		.loc 1 203 1 is_stmt 0 view .LVU199
+ 780 0044 7047     		bx	lr
+ 781              	.LVL69:
+ 782              	.L71:
+ 194:Core/Src/step_motor.c ****         return;
+ 783              		.loc 1 194 9 is_stmt 1 view .LVU200
+ 784 0046 4368     		ldr	r3, [r0, #4]
+ 785 0048 23B9     		cbnz	r3, .L63
+ 194:Core/Src/step_motor.c ****         return;
+ 786              		.loc 1 194 9 is_stmt 0 discriminator 1 view .LVU201
+ 787 004a 0368     		ldr	r3, [r0]
+ 788 004c 1B68     		ldr	r3, [r3]
+ 789 004e 0022     		movs	r2, #0
+ 790 0050 5A63     		str	r2, [r3, #52]
+ 791 0052 7047     		bx	lr
+ 792              	.L63:
+ 194:Core/Src/step_motor.c ****         return;
+ 793              		.loc 1 194 9 discriminator 2 view .LVU202
+ 794 0054 042B     		cmp	r3, #4
+ 795 0056 06D0     		beq	.L72
+ 194:Core/Src/step_motor.c ****         return;
+ 796              		.loc 1 194 9 discriminator 4 view .LVU203
+ 797 0058 082B     		cmp	r3, #8
+ 798 005a 09D0     		beq	.L73
+ 194:Core/Src/step_motor.c ****         return;
+ 799              		.loc 1 194 9 discriminator 7 view .LVU204
+ 800 005c 0368     		ldr	r3, [r0]
+ 801 005e 1B68     		ldr	r3, [r3]
+ 802 0060 0022     		movs	r2, #0
+ 803 0062 1A64     		str	r2, [r3, #64]
+ 195:Core/Src/step_motor.c ****     }
+ 804              		.loc 1 195 9 is_stmt 1 view .LVU205
+ 805 0064 7047     		bx	lr
+ 806              	.L72:
+ 194:Core/Src/step_motor.c ****         return;
+ARM GAS  /tmp/ccBk6Q5S.s 			page 19
+
+
+ 807              		.loc 1 194 9 is_stmt 0 discriminator 3 view .LVU206
+ 808 0066 0368     		ldr	r3, [r0]
+ 809 0068 1B68     		ldr	r3, [r3]
+ 810 006a 0022     		movs	r2, #0
+ 811 006c 9A63     		str	r2, [r3, #56]
+ 812 006e 7047     		bx	lr
+ 813              	.L73:
+ 194:Core/Src/step_motor.c ****         return;
+ 814              		.loc 1 194 9 discriminator 6 view .LVU207
+ 815 0070 0368     		ldr	r3, [r0]
+ 816 0072 1B68     		ldr	r3, [r3]
+ 817 0074 0022     		movs	r2, #0
+ 818 0076 DA63     		str	r2, [r3, #60]
+ 819 0078 7047     		bx	lr
+ 820              	.LVL70:
+ 821              	.L67:
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 822              		.loc 1 201 5 discriminator 2 view .LVU208
+ 823 007a 0429     		cmp	r1, #4
+ 824 007c 06D0     		beq	.L74
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 825              		.loc 1 201 5 discriminator 4 view .LVU209
+ 826 007e 0829     		cmp	r1, #8
+ 827 0080 09D0     		beq	.L75
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 828              		.loc 1 201 5 discriminator 7 view .LVU210
+ 829 0082 0168     		ldr	r1, [r0]
+ 830 0084 0968     		ldr	r1, [r1]
+ 831 0086 5B08     		lsrs	r3, r3, #1
+ 832              	.LVL71:
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 833              		.loc 1 201 5 discriminator 7 view .LVU211
+ 834 0088 0B64     		str	r3, [r1, #64]
+ 835 008a D7E7     		b	.L68
+ 836              	.LVL72:
+ 837              	.L74:
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 838              		.loc 1 201 5 discriminator 3 view .LVU212
+ 839 008c 0168     		ldr	r1, [r0]
+ 840 008e 0968     		ldr	r1, [r1]
+ 841 0090 5B08     		lsrs	r3, r3, #1
+ 842              	.LVL73:
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 843              		.loc 1 201 5 discriminator 3 view .LVU213
+ 844 0092 8B63     		str	r3, [r1, #56]
+ 845 0094 D2E7     		b	.L68
+ 846              	.LVL74:
+ 847              	.L75:
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 848              		.loc 1 201 5 discriminator 6 view .LVU214
+ 849 0096 0168     		ldr	r1, [r0]
+ 850 0098 0968     		ldr	r1, [r1]
+ 851 009a 5B08     		lsrs	r3, r3, #1
+ 852              	.LVL75:
+ 201:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
+ 853              		.loc 1 201 5 discriminator 6 view .LVU215
+ 854 009c CB63     		str	r3, [r1, #60]
+ARM GAS  /tmp/ccBk6Q5S.s 			page 20
+
+
+ 855 009e CDE7     		b	.L68
+ 856              	.L77:
+ 857              		.align	2
+ 858              	.L76:
+ 859 00a0 00247449 		.word	1232348160
+ 860              		.cfi_endproc
+ 861              	.LFE146:
+ 863              		.global	one_step
+ 864              		.section	.rodata.one_step,"a"
+ 865              		.align	2
+ 868              	one_step:
+ 869 0000 1951F93D 		.word	1039749401
+ 870              		.global	man_range2
+ 871              		.section	.rodata.man_range2,"a"
+ 872              		.align	2
+ 875              	man_range2:
+ 876 0000 C8000000 		.word	200
+ 877              		.global	man_range1
+ 878              		.section	.rodata.man_range1,"a"
+ 879              		.align	2
+ 882              	man_range1:
+ 883 0000 64000000 		.word	100
+ 884              		.global	MY_PI
+ 885              		.section	.rodata.MY_PI,"a"
+ 886              		.align	3
+ 889              	MY_PI:
+ 890 0000 182D4454 		.word	1413754136
+ 891 0004 FB210940 		.word	1074340347
+ 892              		.text
+ 893              	.Letext0:
+ 894              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 895              		.file 3 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 896              		.file 4 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 897              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 898              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 899              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 900              		.file 8 "Core/Inc/step_motor.h"
+ 901              		.file 9 "/usr/include/newlib/stdio.h"
+ 902              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  /tmp/ccBk6Q5S.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 step_motor.c
-     /tmp/ccvv8Eal.s:21     .text.step_motor_init:00000000 $t
-     /tmp/ccvv8Eal.s:27     .text.step_motor_init:00000000 step_motor_init
-     /tmp/ccvv8Eal.s:79     .text.step_motor_init:00000028 $d
-     /tmp/ccvv8Eal.s:85     .text.start_step_motor:00000000 $t
-     /tmp/ccvv8Eal.s:91     .text.start_step_motor:00000000 start_step_motor
-     /tmp/ccvv8Eal.s:133    .text.stop_step_motor:00000000 $t
-     /tmp/ccvv8Eal.s:139    .text.stop_step_motor:00000000 stop_step_motor
-     /tmp/ccvv8Eal.s:181    .text.dir_and_move_step_motor:00000000 $t
-     /tmp/ccvv8Eal.s:187    .text.dir_and_move_step_motor:00000000 dir_and_move_step_motor
-     /tmp/ccvv8Eal.s:238    .text.which_man_range:00000000 $t
-     /tmp/ccvv8Eal.s:244    .text.which_man_range:00000000 which_man_range
-     /tmp/ccvv8Eal.s:296    .text.compute_man_location:00000000 $t
-     /tmp/ccvv8Eal.s:302    .text.compute_man_location:00000000 compute_man_location
-     /tmp/ccvv8Eal.s:342    .text.compute_man_location:00000038 $d
-     /tmp/ccvv8Eal.s:347    .text.init_pid:00000000 $t
-     /tmp/ccvv8Eal.s:353    .text.init_pid:00000000 init_pid
-     /tmp/ccvv8Eal.s:416    .text.init_pid:00000034 $d
-     /tmp/ccvv8Eal.s:425    .rodata.PI_Update.str1.4:00000000 $d
-     /tmp/ccvv8Eal.s:430    .text.PI_Update:00000000 $t
-     /tmp/ccvv8Eal.s:436    .text.PI_Update:00000000 PI_Update
-     /tmp/ccvv8Eal.s:598    .text.PI_Update:000000d8 $d
-     /tmp/ccvv8Eal.s:606    .text.Set_Step_Frequency:00000000 $t
-     /tmp/ccvv8Eal.s:612    .text.Set_Step_Frequency:00000000 Set_Step_Frequency
-     /tmp/ccvv8Eal.s:749    .text.Set_Step_Frequency:000000a0 $d
-     /tmp/ccvv8Eal.s:758    .rodata.one_step:00000000 one_step
-     /tmp/ccvv8Eal.s:755    .rodata.one_step:00000000 $d
-     /tmp/ccvv8Eal.s:765    .rodata.man_range2:00000000 man_range2
-     /tmp/ccvv8Eal.s:762    .rodata.man_range2:00000000 $d
-     /tmp/ccvv8Eal.s:772    .rodata.man_range1:00000000 man_range1
-     /tmp/ccvv8Eal.s:769    .rodata.man_range1:00000000 $d
-     /tmp/ccvv8Eal.s:779    .rodata.MY_PI:00000000 MY_PI
-     /tmp/ccvv8Eal.s:776    .rodata.MY_PI:00000000 $d
+     /tmp/ccBk6Q5S.s:21     .text.step_motor_init:00000000 $t
+     /tmp/ccBk6Q5S.s:27     .text.step_motor_init:00000000 step_motor_init
+     /tmp/ccBk6Q5S.s:79     .text.step_motor_init:00000028 $d
+     /tmp/ccBk6Q5S.s:85     .text.start_step_motor:00000000 $t
+     /tmp/ccBk6Q5S.s:91     .text.start_step_motor:00000000 start_step_motor
+     /tmp/ccBk6Q5S.s:133    .text.stop_step_motor:00000000 $t
+     /tmp/ccBk6Q5S.s:139    .text.stop_step_motor:00000000 stop_step_motor
+     /tmp/ccBk6Q5S.s:181    .text.dir_and_move_step_motor:00000000 $t
+     /tmp/ccBk6Q5S.s:187    .text.dir_and_move_step_motor:00000000 dir_and_move_step_motor
+     /tmp/ccBk6Q5S.s:238    .text.which_man_range:00000000 $t
+     /tmp/ccBk6Q5S.s:244    .text.which_man_range:00000000 which_man_range
+     /tmp/ccBk6Q5S.s:295    .text.which_step_motor:00000000 $t
+     /tmp/ccBk6Q5S.s:301    .text.which_step_motor:00000000 which_step_motor
+     /tmp/ccBk6Q5S.s:406    .text.compute_man_location:00000000 $t
+     /tmp/ccBk6Q5S.s:412    .text.compute_man_location:00000000 compute_man_location
+     /tmp/ccBk6Q5S.s:452    .text.compute_man_location:00000038 $d
+     /tmp/ccBk6Q5S.s:457    .text.init_pid:00000000 $t
+     /tmp/ccBk6Q5S.s:463    .text.init_pid:00000000 init_pid
+     /tmp/ccBk6Q5S.s:526    .text.init_pid:00000034 $d
+     /tmp/ccBk6Q5S.s:535    .rodata.PI_Update.str1.4:00000000 $d
+     /tmp/ccBk6Q5S.s:540    .text.PI_Update:00000000 $t
+     /tmp/ccBk6Q5S.s:546    .text.PI_Update:00000000 PI_Update
+     /tmp/ccBk6Q5S.s:708    .text.PI_Update:000000d8 $d
+     /tmp/ccBk6Q5S.s:716    .text.Set_Step_Frequency:00000000 $t
+     /tmp/ccBk6Q5S.s:722    .text.Set_Step_Frequency:00000000 Set_Step_Frequency
+     /tmp/ccBk6Q5S.s:859    .text.Set_Step_Frequency:000000a0 $d
+     /tmp/ccBk6Q5S.s:868    .rodata.one_step:00000000 one_step
+     /tmp/ccBk6Q5S.s:865    .rodata.one_step:00000000 $d
+     /tmp/ccBk6Q5S.s:875    .rodata.man_range2:00000000 man_range2
+     /tmp/ccBk6Q5S.s:872    .rodata.man_range2:00000000 $d
+     /tmp/ccBk6Q5S.s:882    .rodata.man_range1:00000000 man_range1
+     /tmp/ccBk6Q5S.s:879    .rodata.man_range1:00000000 $d
+     /tmp/ccBk6Q5S.s:889    .rodata.MY_PI:00000000 MY_PI
+     /tmp/ccBk6Q5S.s:886    .rodata.MY_PI:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_TIM_Base_Start_IT
