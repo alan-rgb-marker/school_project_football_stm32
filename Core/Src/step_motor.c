@@ -8,7 +8,7 @@ const int man_range2 = 200;
 const float one_step = 31 * MY_PI / 800;
 
 /* --------------------------------------------step_motor----------------------------------------------- */
-void step_motor_init(Step_motor *step_motor, TIM_HandleTypeDef *Slide_htim, uint32_t Slide_Channel, GPIO_TypeDef *Slide_Dir_GPIOx, uint16_t Slide_Dir_GPIO_Pin, int Slide_Dir, TIM_HandleTypeDef *Ball_htim, uint32_t Ball_Channel)
+void step_motor_init(Step_motor *step_motor, TIM_HandleTypeDef *Slide_htim, uint32_t Slide_Channel, GPIO_TypeDef *Slide_Dir_GPIOx, uint16_t Slide_Dir_GPIO_Pin, int Slide_Dir, TIM_HandleTypeDef *Ball_htim, uint32_t Ball_Channel, int min_range, int max_range)
 {
     step_motor->Slide_htim = Slide_htim;
     step_motor->Slide_Channel = Slide_Channel;
@@ -20,6 +20,11 @@ void step_motor_init(Step_motor *step_motor, TIM_HandleTypeDef *Slide_htim, uint
     step_motor->man[0] = 0;
     step_motor->man[1] = 100;
     step_motor->man[2] = 200;
+
+    step_motor->kick_step = 0;
+
+    step_motor->ball_x_min_range = min_range;
+    step_motor->ball_x_max_range = max_range;
 }
 
 void start_step_motor(Step_motor *step_motor)
@@ -49,7 +54,26 @@ void dir_and_move_step_motor(Step_motor *step_motor, int dir)
         HAL_GPIO_WritePin(step_motor->Slide_Dir_GPIOx, step_motor->Slide_Dir_GPIO_Pin, dir == 1 ? GPIO_PIN_SET : GPIO_PIN_RESET);
     }
 }
+
+void kick_start_step_motor(Step_motor *step_motor)
+{
+    if (step_motor != NULL)
+    {
+        HAL_TIM_Base_Start_IT(step_motor->Ball_htim);
+        HAL_TIM_PWM_Start(step_motor->Ball_htim, step_motor->Ball_Channel);
+    }
+}
+
+void kick_stop_step_motor(Step_motor *step_motor)
+{
+    if (step_motor != NULL)
+    {
+        HAL_TIM_Base_Stop_IT(step_motor->Ball_htim);
+        HAL_TIM_PWM_Stop(step_motor->Ball_htim, step_motor->Ball_Channel);
+    }
+}
 /* --------------------------------------------step_motor----------------------------------------------- */
+
 
 /* ------------------------------------------判斷球在小人的哪個範圍--------------------------------------------- */
 float *which_man_range(Coord *ball_coord, Step_motor *step_motor)
@@ -118,6 +142,13 @@ void compute_man_location(Step_motor *step_motor)
         step_motor->man[2] += step_motor->Slide_Dir * one_step;
     }
 }
+void count_kick_step(Step_motor *step_motor)
+{
+    if (step_motor != NULL)
+    {
+        step_motor->kick_step++;
+    }   
+}
 /* ---------------------------------------------pi----------------------------------------------- */
 
 void init_pid(PIDController *pid)
@@ -183,3 +214,4 @@ void Set_Step_Frequency(Step_motor *man, float freq)
     __HAL_TIM_SET_COMPARE(man->Slide_htim, man->Slide_Channel, arr / 2);
     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
 }
+

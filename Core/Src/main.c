@@ -158,9 +158,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
       HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_1);
       // 初始話馬達位置
-      step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1);
-      step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1);
-      step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1);
+      step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, 371, 402);
+      step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, 207, 245);
+      step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, 27, 70);
       // 傳輸到達圓點訊號
       char read_msg[] = "read";
       HAL_UART_Transmit_IT(&huart1, (uint8_t *)read_msg, strlen(read_msg));
@@ -174,7 +174,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM1)
   {
     // 371 402踢球
-    return;
+    count_kick_step(&one);
+    if (one.kick_step % 800 == 0)
+    {
+      one.kick_step = 0;
+      kick_stop_step_motor(&one);
+    } 
   }
 
   if (htim->Instance == TIM2)
@@ -187,7 +192,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM3)
   {
     // 207到245踢球
-    return;
+    count_kick_step(&two);
+    if (two.kick_step % 800 == 0)
+    {
+      two.kick_step = 0;
+      kick_stop_step_motor(&two);
+    }
   }
 
   if (htim->Instance == TIM4)
@@ -200,7 +210,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM5)
   {
     // 27 70踢球
-    return;
+    count_kick_step(&three);
+    if (three.kick_step % 800 == 0)
+    {
+      three.kick_step = 0;
+      kick_stop_step_motor(&three);
+    }
   }
 
   if (htim->Instance == TIM8)
@@ -251,9 +266,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart1, (uint8_t *)coord_data, sizeof(coord_data));
   init_pid(&pid);
-  step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1);
-  step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1);
-  step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1);
+  step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, 371, 402);
+  step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, 207, 245);
+  step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, 27, 70);
   ball_coord.x = 0;
   ball_coord.y = 0;
 
@@ -271,7 +286,7 @@ int main(void)
     {
       if (HAL_GetTick() - start_time >= 20)
       {
-        
+
         Step_motor *select_step_motor = which_step_motor(&ball_coord, &one, &two, &three);
         float *man_range;
         if (select_step_motor != NULL)
@@ -298,6 +313,16 @@ int main(void)
           else
           {
             stop_step_motor(select_step_motor);
+          }
+
+          if (fabs(result) <= 2) // 判斷距離
+          {
+            // 如果這個踢球為轉滿一圈先不要給訊號：800為一圈
+            if (select_step_motor->kick_step % 800 == 0 && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range) 
+            {
+              kick_start_step_motor(select_step_motor);
+            }
+            
           }
         }
         start_time = HAL_GetTick(); // 時間控制
@@ -403,7 +428,7 @@ static void MX_TIM1_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 300;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
