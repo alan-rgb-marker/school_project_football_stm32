@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cckWER1L.s 			page 1
+ARM GAS  /tmp/cc9O3JCY.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
   41              		.loc 1 15 5 is_stmt 1 view .LVU5
   42              		.loc 1 15 33 is_stmt 0 view .LVU6
   43 0004 8360     		str	r3, [r0, #8]
-ARM GAS  /tmp/cckWER1L.s 			page 2
+ARM GAS  /tmp/cc9O3JCY.s 			page 2
 
 
   16:Core/Src/step_motor.c ****     step_motor->Slide_Dir_GPIO_Pin = Slide_Dir_GPIO_Pin;
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
   28:Core/Src/step_motor.c **** }
   86              		.loc 1 28 1 view .LVU28
   87 0030 7047     		bx	lr
-ARM GAS  /tmp/cckWER1L.s 			page 3
+ARM GAS  /tmp/cc9O3JCY.s 			page 3
 
 
   88              	.L3:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  134              	.L7:
  135              	.LCFI1:
  136              		.cfi_def_cfa_offset 0
-ARM GAS  /tmp/cckWER1L.s 			page 4
+ARM GAS  /tmp/cc9O3JCY.s 			page 4
 
 
  137              		.cfi_restore 4
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  183              	.LCFI3:
  184              		.cfi_def_cfa_offset 0
  185              		.cfi_restore 4
-ARM GAS  /tmp/cckWER1L.s 			page 5
+ARM GAS  /tmp/cc9O3JCY.s 			page 5
 
 
  186              		.cfi_restore 14
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  233              	.LVL14:
   55:Core/Src/step_motor.c ****     }
   56:Core/Src/step_motor.c **** }
-ARM GAS  /tmp/cckWER1L.s 			page 6
+ARM GAS  /tmp/cc9O3JCY.s 			page 6
 
 
  234              		.loc 1 56 1 is_stmt 0 view .LVU55
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  282 0010 FFF7FEFF 		bl	HAL_TIM_PWM_Start
  283              	.LVL19:
   64:Core/Src/step_motor.c ****     }
-ARM GAS  /tmp/cckWER1L.s 			page 7
+ARM GAS  /tmp/cc9O3JCY.s 			page 7
 
 
   65:Core/Src/step_motor.c **** }
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  331              	.LVL24:
   73:Core/Src/step_motor.c ****     }
   74:Core/Src/step_motor.c **** }
-ARM GAS  /tmp/cckWER1L.s 			page 8
+ARM GAS  /tmp/cc9O3JCY.s 			page 8
 
 
  332              		.loc 1 74 1 is_stmt 0 view .LVU73
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  373              		.loc 1 89 13 is_stmt 1 view .LVU83
  374              		.loc 1 89 20 is_stmt 0 view .LVU84
  375 000c 01F12000 		add	r0, r1, #32
-ARM GAS  /tmp/cckWER1L.s 			page 9
+ARM GAS  /tmp/cc9O3JCY.s 			page 9
 
 
  376              	.LVL27:
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  415              		@ frame_needed = 0, uses_anonymous_args = 0
  416              		.loc 1 103 1 is_stmt 0 view .LVU94
  417 0000 70B5     		push	{r4, r5, r6, lr}
-ARM GAS  /tmp/cckWER1L.s 			page 10
+ARM GAS  /tmp/cc9O3JCY.s 			page 10
 
 
  418              	.LCFI10:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  454 0024 2046     		mov	r0, r4
  455              	.L40:
  122:Core/Src/step_motor.c ****     }
-ARM GAS  /tmp/cckWER1L.s 			page 11
+ARM GAS  /tmp/cc9O3JCY.s 			page 11
 
 
  123:Core/Src/step_motor.c ****     else
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  491              	.L44:
  126:Core/Src/step_motor.c ****         stop_step_motor(two);
  492              		.loc 1 126 9 is_stmt 1 view .LVU118
-ARM GAS  /tmp/cckWER1L.s 			page 12
+ARM GAS  /tmp/cc9O3JCY.s 			page 12
 
 
  493 0048 0846     		mov	r0, r1
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  535 0006 D0ED047A 		vldr.32	s15, [r0, #16]	@ int
  536 000a F8EEE77A 		vcvt.f32.s32	s15, s15
  537 000e DFED0A6A 		vldr.32	s13, .L50
-ARM GAS  /tmp/cckWER1L.s 			page 13
+ARM GAS  /tmp/cc9O3JCY.s 			page 13
 
 
  538 0012 67EEA67A 		vmul.f32	s15, s15, s13
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  585              		.loc 1 149 30 view .LVU143
  586 0004 0133     		adds	r3, r3, #1
  587 0006 8362     		str	r3, [r0, #40]
-ARM GAS  /tmp/cckWER1L.s 			page 14
+ARM GAS  /tmp/cc9O3JCY.s 			page 14
 
 
  588              	.L52:
@@ -823,7 +823,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  619              		.loc 1 158 17 is_stmt 0 view .LVU150
  620 0006 4FF07E53 		mov	r3, #1065353216
  621 000a 4360     		str	r3, [r0, #4]	@ float
- 159:Core/Src/step_motor.c ****         pid->Kp = 80.0f;
+ 159:Core/Src/step_motor.c ****         pid->Kp = 65.0f;
  622              		.loc 1 159 9 is_stmt 1 view .LVU151
  623              		.loc 1 159 17 is_stmt 0 view .LVU152
  624 000c 094B     		ldr	r3, .L60
@@ -838,10 +838,10 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  631              		.loc 1 161 23 is_stmt 0 view .LVU156
  632 0014 094B     		ldr	r3, .L60+8
  633 0016 4361     		str	r3, [r0, #20]	@ float
-ARM GAS  /tmp/cckWER1L.s 			page 15
+ARM GAS  /tmp/cc9O3JCY.s 			page 15
 
 
- 162:Core/Src/step_motor.c ****         pid->DEAD_ZONE = 400.0f;
+ 162:Core/Src/step_motor.c ****         pid->DEAD_ZONE = 150.0f;
  634              		.loc 1 162 9 is_stmt 1 view .LVU157
  635              		.loc 1 162 24 is_stmt 0 view .LVU158
  636 0018 094B     		ldr	r3, .L60+12
@@ -876,10 +876,10 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  661              	.L61:
  662              		.align	2
  663              	.L60:
- 664 0034 0000A042 		.word	1117782016
+ 664 0034 00008242 		.word	1115815936
  665 0038 0AD7A33C 		.word	1017370378
  666 003c 0000FA44 		.word	1157234688
- 667 0040 0000C843 		.word	1137180672
+ 667 0040 00001643 		.word	1125515264
  668              		.cfi_endproc
  669              	.LFE147:
  671              		.section	.text.PI_Update,"ax",%progbits
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  682              		.cfi_startproc
  683              		@ args = 0, pretend = 0, frame = 0
  684              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cckWER1L.s 			page 16
+ARM GAS  /tmp/cc9O3JCY.s 			page 16
 
 
  685              		.loc 1 169 1 is_stmt 0 view .LVU168
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  730 003a 67EE887A 		vmul.f32	s15, s15, s16
  731              	.LVL61:
  732              		.loc 1 178 19 view .LVU184
-ARM GAS  /tmp/cckWER1L.s 			page 17
+ARM GAS  /tmp/cc9O3JCY.s 			page 17
 
 
  733 003e 37EE277A 		vadd.f32	s14, s14, s15
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  189:Core/Src/step_motor.c ****         output = 0;
  777              		.loc 1 189 16 view .LVU202
  778 0090 9FED040A 		vldr.32	s0, .L72+4
-ARM GAS  /tmp/cckWER1L.s 			page 18
+ARM GAS  /tmp/cc9O3JCY.s 			page 18
 
 
  779              	.LVL65:
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  826              		.loc 1 196 8 is_stmt 0 view .LVU210
  827 0000 0246     		mov	r2, r0
  828 0002 F8B1     		cbz	r0, .L74
-ARM GAS  /tmp/cckWER1L.s 			page 19
+ARM GAS  /tmp/cc9O3JCY.s 			page 19
 
 
  197:Core/Src/step_motor.c ****     {
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  865 003a 4B63     		str	r3, [r1, #52]
  866              	.L82:
  215:Core/Src/step_motor.c ****     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
-ARM GAS  /tmp/cckWER1L.s 			page 20
+ARM GAS  /tmp/cc9O3JCY.s 			page 20
 
 
  867              		.loc 1 215 5 is_stmt 1 view .LVU226
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  912 0074 0022     		movs	r2, #0
  913 0076 DA63     		str	r2, [r3, #60]
  914 0078 7047     		bx	lr
-ARM GAS  /tmp/cckWER1L.s 			page 21
+ARM GAS  /tmp/cc9O3JCY.s 			page 21
 
 
  915              	.LVL75:
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  964 0000 1951F93D 		.word	1039749401
  965              		.global	man_range2
  966              		.section	.rodata.man_range2,"a"
-ARM GAS  /tmp/cckWER1L.s 			page 22
+ARM GAS  /tmp/cc9O3JCY.s 			page 22
 
 
  967              		.align	2
@@ -1285,50 +1285,50 @@ ARM GAS  /tmp/cckWER1L.s 			page 1
  994              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
  995              		.file 8 "Core/Inc/step_motor.h"
  996              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  /tmp/cckWER1L.s 			page 23
+ARM GAS  /tmp/cc9O3JCY.s 			page 23
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 step_motor.c
-     /tmp/cckWER1L.s:21     .text.step_motor_init:00000000 $t
-     /tmp/cckWER1L.s:27     .text.step_motor_init:00000000 step_motor_init
-     /tmp/cckWER1L.s:91     .text.step_motor_init:00000034 $d
-     /tmp/cckWER1L.s:97     .text.start_step_motor:00000000 $t
-     /tmp/cckWER1L.s:103    .text.start_step_motor:00000000 start_step_motor
-     /tmp/cckWER1L.s:145    .text.stop_step_motor:00000000 $t
-     /tmp/cckWER1L.s:151    .text.stop_step_motor:00000000 stop_step_motor
-     /tmp/cckWER1L.s:193    .text.dir_and_move_step_motor:00000000 $t
-     /tmp/cckWER1L.s:199    .text.dir_and_move_step_motor:00000000 dir_and_move_step_motor
-     /tmp/cckWER1L.s:250    .text.kick_start_step_motor:00000000 $t
-     /tmp/cckWER1L.s:256    .text.kick_start_step_motor:00000000 kick_start_step_motor
-     /tmp/cckWER1L.s:298    .text.kick_stop_step_motor:00000000 $t
-     /tmp/cckWER1L.s:304    .text.kick_stop_step_motor:00000000 kick_stop_step_motor
-     /tmp/cckWER1L.s:346    .text.which_man_range:00000000 $t
-     /tmp/cckWER1L.s:352    .text.which_man_range:00000000 which_man_range
-     /tmp/cckWER1L.s:403    .text.which_step_motor:00000000 $t
-     /tmp/cckWER1L.s:409    .text.which_step_motor:00000000 which_step_motor
-     /tmp/cckWER1L.s:514    .text.compute_man_location:00000000 $t
-     /tmp/cckWER1L.s:520    .text.compute_man_location:00000000 compute_man_location
-     /tmp/cckWER1L.s:560    .text.compute_man_location:00000038 $d
-     /tmp/cckWER1L.s:565    .text.count_kick_step:00000000 $t
-     /tmp/cckWER1L.s:571    .text.count_kick_step:00000000 count_kick_step
-     /tmp/cckWER1L.s:595    .text.init_pid:00000000 $t
-     /tmp/cckWER1L.s:601    .text.init_pid:00000000 init_pid
-     /tmp/cckWER1L.s:664    .text.init_pid:00000034 $d
-     /tmp/cckWER1L.s:672    .text.PI_Update:00000000 $t
-     /tmp/cckWER1L.s:678    .text.PI_Update:00000000 PI_Update
-     /tmp/cckWER1L.s:804    .text.PI_Update:000000a0 $d
-     /tmp/cckWER1L.s:811    .text.Set_Step_Frequency:00000000 $t
-     /tmp/cckWER1L.s:817    .text.Set_Step_Frequency:00000000 Set_Step_Frequency
-     /tmp/cckWER1L.s:954    .text.Set_Step_Frequency:000000a0 $d
-     /tmp/cckWER1L.s:963    .rodata.one_step:00000000 one_step
-     /tmp/cckWER1L.s:960    .rodata.one_step:00000000 $d
-     /tmp/cckWER1L.s:970    .rodata.man_range2:00000000 man_range2
-     /tmp/cckWER1L.s:967    .rodata.man_range2:00000000 $d
-     /tmp/cckWER1L.s:977    .rodata.man_range1:00000000 man_range1
-     /tmp/cckWER1L.s:974    .rodata.man_range1:00000000 $d
-     /tmp/cckWER1L.s:984    .rodata.MY_PI:00000000 MY_PI
-     /tmp/cckWER1L.s:981    .rodata.MY_PI:00000000 $d
+     /tmp/cc9O3JCY.s:21     .text.step_motor_init:00000000 $t
+     /tmp/cc9O3JCY.s:27     .text.step_motor_init:00000000 step_motor_init
+     /tmp/cc9O3JCY.s:91     .text.step_motor_init:00000034 $d
+     /tmp/cc9O3JCY.s:97     .text.start_step_motor:00000000 $t
+     /tmp/cc9O3JCY.s:103    .text.start_step_motor:00000000 start_step_motor
+     /tmp/cc9O3JCY.s:145    .text.stop_step_motor:00000000 $t
+     /tmp/cc9O3JCY.s:151    .text.stop_step_motor:00000000 stop_step_motor
+     /tmp/cc9O3JCY.s:193    .text.dir_and_move_step_motor:00000000 $t
+     /tmp/cc9O3JCY.s:199    .text.dir_and_move_step_motor:00000000 dir_and_move_step_motor
+     /tmp/cc9O3JCY.s:250    .text.kick_start_step_motor:00000000 $t
+     /tmp/cc9O3JCY.s:256    .text.kick_start_step_motor:00000000 kick_start_step_motor
+     /tmp/cc9O3JCY.s:298    .text.kick_stop_step_motor:00000000 $t
+     /tmp/cc9O3JCY.s:304    .text.kick_stop_step_motor:00000000 kick_stop_step_motor
+     /tmp/cc9O3JCY.s:346    .text.which_man_range:00000000 $t
+     /tmp/cc9O3JCY.s:352    .text.which_man_range:00000000 which_man_range
+     /tmp/cc9O3JCY.s:403    .text.which_step_motor:00000000 $t
+     /tmp/cc9O3JCY.s:409    .text.which_step_motor:00000000 which_step_motor
+     /tmp/cc9O3JCY.s:514    .text.compute_man_location:00000000 $t
+     /tmp/cc9O3JCY.s:520    .text.compute_man_location:00000000 compute_man_location
+     /tmp/cc9O3JCY.s:560    .text.compute_man_location:00000038 $d
+     /tmp/cc9O3JCY.s:565    .text.count_kick_step:00000000 $t
+     /tmp/cc9O3JCY.s:571    .text.count_kick_step:00000000 count_kick_step
+     /tmp/cc9O3JCY.s:595    .text.init_pid:00000000 $t
+     /tmp/cc9O3JCY.s:601    .text.init_pid:00000000 init_pid
+     /tmp/cc9O3JCY.s:664    .text.init_pid:00000034 $d
+     /tmp/cc9O3JCY.s:672    .text.PI_Update:00000000 $t
+     /tmp/cc9O3JCY.s:678    .text.PI_Update:00000000 PI_Update
+     /tmp/cc9O3JCY.s:804    .text.PI_Update:000000a0 $d
+     /tmp/cc9O3JCY.s:811    .text.Set_Step_Frequency:00000000 $t
+     /tmp/cc9O3JCY.s:817    .text.Set_Step_Frequency:00000000 Set_Step_Frequency
+     /tmp/cc9O3JCY.s:954    .text.Set_Step_Frequency:000000a0 $d
+     /tmp/cc9O3JCY.s:963    .rodata.one_step:00000000 one_step
+     /tmp/cc9O3JCY.s:960    .rodata.one_step:00000000 $d
+     /tmp/cc9O3JCY.s:970    .rodata.man_range2:00000000 man_range2
+     /tmp/cc9O3JCY.s:967    .rodata.man_range2:00000000 $d
+     /tmp/cc9O3JCY.s:977    .rodata.man_range1:00000000 man_range1
+     /tmp/cc9O3JCY.s:974    .rodata.man_range1:00000000 $d
+     /tmp/cc9O3JCY.s:984    .rodata.MY_PI:00000000 MY_PI
+     /tmp/cc9O3JCY.s:981    .rodata.MY_PI:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_TIM_Base_Start_IT

@@ -156,10 +156,10 @@ void init_pid(PIDController *pid)
     if (pid != NULL)
     {
         pid->Ki = 1.0f;
-        pid->Kp = 80.0f;
+        pid->Kp = 65.0f;
         pid->DT_SEC = 0.02f;
         pid->MAX_FREQ = 2000.0f;
-        pid->DEAD_ZONE = 400.0f;
+        pid->DEAD_ZONE = 150.0f;
         pid->integral = 0.0f;
         pid->last_time = HAL_GetTick();
     }

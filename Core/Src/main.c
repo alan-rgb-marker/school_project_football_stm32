@@ -63,6 +63,7 @@ bool if_init = false;
 
 PIDController pid;
 float result = 0.0f;
+bool if_origin[3] = {false, false, false}; //判斷馬達回原點
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,12 +98,24 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     {
       ball_coord = str_find_int(coord_data);
     }
+    else if (strcmp(coord_data, "isno_ball") == 0)
+    {
+      // 初始話位置
+      ball_coord.x = 0;
+      ball_coord.y = 0;
+    }
+    
 
     if (strcmp(coord_data, "stopstops") == 0)
     {
       HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_SET);
       if_start = false;
       if_init = false;
+      if_origin[0] = false;
+      if_origin[1] = false;
+      if_origin[2] = false;
+      ball_coord.x = 0;
+      ball_coord.y = 0;
     }
     if (strcmp(coord_data, "starttart") == 0)
     {
@@ -118,6 +131,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       // 確認是否到原點感測器
       if (HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_0) != GPIO_PIN_RESET)
       {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_11, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
+
         Set_Step_Frequency(&one, 500);
         Set_Step_Frequency(&two, 500);
         Set_Step_Frequency(&three, 500);
@@ -139,34 +156,47 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
   }
 }
 
+
 // 原點感測中斷：當回到滑軌移動到原點停止馬達->初始話馬達位置->傳一個以到達原點的訊號給電腦
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-  if (GPIO_Pin == GPIO_PIN_0)
+  if (if_init == false && strcmp(coord_data, "init,init") == 0)
   {
-    if (if_init == false && strcmp(coord_data, "init,init") == 0)
+    if (GPIO_Pin == GPIO_PIN_0)
     {
-
-      // 直到圓跳出迴圈
-      while (true)
-      {
-        if (HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_0) == GPIO_PIN_RESET)
-          break;
-      }
       // 停止馬達移動
       HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
-      HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
-      HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_1);
       // 初始話馬達位置
       step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, 371, 402);
+      if_origin[0] = true;
+    }
+    
+    if (GPIO_Pin == GPIO_PIN_1)
+    {
+      HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
+      // 初始話馬達位置
       step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, 207, 245);
+      if_origin[1] = true;
+    
+    }
+  
+    if (GPIO_Pin == GPIO_PIN_2)
+    {
+      HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_1);
       step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, 27, 70);
+      if_origin[2] = true;
+    
+    }
+    if (if_origin[0] == true && if_origin[1] == true && if_origin[2] == true){
       // 傳輸到達圓點訊號
       char read_msg[] = "read";
       HAL_UART_Transmit_IT(&huart1, (uint8_t *)read_msg, strlen(read_msg));
       if_init = true;
     }
   }
+
+  
+  
 }
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -832,9 +862,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
                           |GPIO_PIN_4|GPIO_PIN_5, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PE2 PE1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_1;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pins : PE2 PE0 PE1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_0|GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
@@ -861,15 +891,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PE0 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
