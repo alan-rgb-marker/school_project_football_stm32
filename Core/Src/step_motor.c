@@ -25,6 +25,8 @@ void step_motor_init(Step_motor *step_motor, TIM_HandleTypeDef *Slide_htim, uint
 
     step_motor->ball_x_min_range = min_range;
     step_motor->ball_x_max_range = max_range;
+
+    init_pid(&step_motor->pid);
 }
 
 void start_step_motor(Step_motor *step_motor)

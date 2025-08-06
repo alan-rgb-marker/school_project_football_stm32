@@ -21,6 +21,19 @@ typedef struct
     int y;
 } Coord;
 
+typedef struct{
+    float Kp;
+    float Ki;
+
+    float integral;
+
+    float last_time;
+
+    float DT_SEC;
+    float MAX_FREQ;
+    float DEAD_ZONE;
+} PIDController;
+
 typedef struct
 {
     // 滑軌tim
@@ -30,6 +43,8 @@ typedef struct
     GPIO_TypeDef *Slide_Dir_GPIOx;
     uint16_t Slide_Dir_GPIO_Pin;
     int Slide_Dir;
+    // pid
+    PIDController pid;
 
     // 踢球tim
     TIM_HandleTypeDef *Ball_htim;
@@ -45,19 +60,6 @@ typedef struct
     int ball_x_max_range;
 
 } Step_motor;
-
-typedef struct{
-    float Kp;
-    float Ki;
-
-    float integral;
-
-    float last_time;
-
-    float DT_SEC;
-    float MAX_FREQ;
-    float DEAD_ZONE;
-} PIDController;
 
 void init_pid(PIDController *pid);
 

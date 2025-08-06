@@ -61,9 +61,17 @@ Coord ball_coord;
 bool if_start = false;
 bool if_init = false;
 
-PIDController pid;
+// PIDController pid;
 float result = 0.0f;
 bool if_origin[3] = {false, false, false}; //判斷馬達回原點
+
+const int ONE_MAX_X = 435;
+const int ONE_MIN_X = 371;
+const int TWO_MAX_X = 245;
+const int TWO_MIN_X = 207;
+const int THREE_MAX_X = 70;
+const int THREE_MIN_X = 27;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -167,7 +175,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       // 停止馬達移動
       HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
       // 初始話馬達位置
-      step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, 371, 402);
+      step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, ONE_MIN_X, ONE_MAX_X);
       if_origin[0] = true;
     }
     
@@ -175,7 +183,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     {
       HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
       // 初始話馬達位置
-      step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, 207, 245);
+      step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, TWO_MIN_X, TWO_MAX_X);
       if_origin[1] = true;
     
     }
@@ -183,7 +191,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     if (GPIO_Pin == GPIO_PIN_2)
     {
       HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_1);
-      step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, 27, 70);
+      step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, THREE_MIN_X, THREE_MAX_X);
       if_origin[2] = true;
     
     }
@@ -295,10 +303,10 @@ int main(void)
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart1, (uint8_t *)coord_data, sizeof(coord_data));
-  init_pid(&pid);
-  step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, 371, 402);
-  step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, 207, 245);
-  step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, 27, 70);
+  // init_pid(&pid);
+  step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, ONE_MIN_X, ONE_MAX_X);
+  step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, TWO_MIN_X, TWO_MAX_X);
+  step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, THREE_MIN_X, THREE_MAX_X);
   ball_coord.x = 0;
   ball_coord.y = 0;
 
@@ -327,7 +335,7 @@ int main(void)
         {
           result = ball_coord.y - *man_range;
           /* ---------------- pid ----------------- */
-          freq = PI_Update(&pid, result);
+          freq = PI_Update(&select_step_motor->pid, result);
           Set_Step_Frequency(select_step_motor, fabs(freq));
           /* ---------------- pid ----------------- */
 
