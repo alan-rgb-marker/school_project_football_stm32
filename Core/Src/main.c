@@ -58,19 +58,28 @@ Step_motor three;
 
 Coord ball_coord;
 
-bool if_start = false;
-bool if_init = false;
+typedef enum {
+  STATE_STOPPED,
+  STATE_INITIALIZING,
+  STATE_HOMING,
+  STATE_READY,
+  STATE_RUNNING
+} SystemState;
+
+volatile SystemState system_state = STATE_STOPPED;
+
+Step_motor *select_step_motor;
 
 // PIDController pid;
 float result = 0.0f;
 bool if_origin[3] = {false, false, false}; //判斷馬達回原點
 
-const int ONE_MAX_X = 435;
-const int ONE_MIN_X = 371;
-const int TWO_MAX_X = 245;
-const int TWO_MIN_X = 207;
-const int THREE_MAX_X = 70;
-const int THREE_MIN_X = 27;
+const int ONE_MAX_X = 450;
+const int ONE_MIN_X = 390;
+const int TWO_MAX_X = 265;
+const int TWO_MIN_X = 210;
+const int THREE_MAX_X = 95;
+const int THREE_MIN_X = 65;
 
 /* USER CODE END PV */
 
@@ -109,32 +118,41 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     else if (strcmp(coord_data, "isno_ball") == 0)
     {
       // 初始話位置
-      ball_coord.x = 0;
-      ball_coord.y = 0;
+      if (select_step_motor->kick_step % 800 > 0)
+      {
+        ball_coord.x += 30;
+        // ball_coord.y += 30;
+      }
+      
     }
     
 
     if (strcmp(coord_data, "stopstops") == 0)
     {
       HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_SET);
-      if_start = false;
-      if_init = false;
+      system_state = STATE_STOPPED;
       if_origin[0] = false;
       if_origin[1] = false;
       if_origin[2] = false;
       ball_coord.x = 0;
       ball_coord.y = 0;
+      stop_step_motor(&one);
+      stop_step_motor(&two);
+      stop_step_motor(&three);
     }
     if (strcmp(coord_data, "starttart") == 0)
     {
       HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_RESET);
       // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_RESET);
-      if_start = true;
+      if (system_state == STATE_READY) {
+        system_state = STATE_RUNNING;
+      }
     }
     if (strcmp(coord_data, "init,init") == 0)
     {
       // 馬達始能
       HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_RESET);
+      system_state = STATE_HOMING;
 
       // 確認是否到原點感測器
       if (HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_0) != GPIO_PIN_RESET)
@@ -168,7 +186,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 // 原點感測中斷：當回到滑軌移動到原點停止馬達->初始話馬達位置->傳一個以到達原點的訊號給電腦
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-  if (if_init == false && strcmp(coord_data, "init,init") == 0)
+  if (system_state == STATE_HOMING)
   {
     if (GPIO_Pin == GPIO_PIN_0)
     {
@@ -199,7 +217,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       // 傳輸到達圓點訊號
       char read_msg[] = "read";
       HAL_UART_Transmit_IT(&huart1, (uint8_t *)read_msg, strlen(read_msg));
-      if_init = true;
+      system_state = STATE_READY;
     }
   }
 
@@ -319,13 +337,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-    if (if_start == true)
+    // 
+    if (system_state == STATE_RUNNING)
     {
       if (HAL_GetTick() - start_time >= 20)
       {
 
-        Step_motor *select_step_motor = which_step_motor(&ball_coord, &one, &two, &three);
+        select_step_motor = which_step_motor(&ball_coord, &one, &two, &three);
         float *man_range;
         if (select_step_motor != NULL)
         {
@@ -350,10 +368,11 @@ int main(void)
           }
           else
           {
+
             stop_step_motor(select_step_motor);
           }
 
-          if (fabs(result) <= 2) // 判斷距離
+          if (fabs(result) <= 8) // 判斷距離
           {
             // 如果這個踢球為轉滿一圈先不要給訊號：800為一圈
             if (select_step_motor->kick_step % 800 == 0 && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range) 
@@ -876,6 +895,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PE4 PE5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PA1 */
   GPIO_InitStruct.Pin = GPIO_PIN_1;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -908,6 +933,12 @@ static void MX_GPIO_Init(void)
 
   HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

@@ -1,11 +1,18 @@
 #include "step_motor.h"
+#include <math.h> // For fabs
 
 const double MY_PI = 3.14159265358979323846;
 
+// Y-axis boundaries for player selection on a rod
 const int man_range1 = 100;
 const int man_range2 = 200;
 
 const float one_step = 31 * MY_PI / 800;
+
+// X-axis boundaries for rod selection
+const int ROD_ONE_BOUNDARY_X = 405;
+const int ROD_TWO_BOUNDARY_X = 207;
+
 
 /* --------------------------------------------step_motor----------------------------------------------- */
 void step_motor_init(Step_motor *step_motor, TIM_HandleTypeDef *Slide_htim, uint32_t Slide_Channel, GPIO_TypeDef *Slide_Dir_GPIOx, uint16_t Slide_Dir_GPIO_Pin, int Slide_Dir, TIM_HandleTypeDef *Ball_htim, uint32_t Ball_Channel, int min_range, int max_range)
@@ -22,6 +29,7 @@ void step_motor_init(Step_motor *step_motor, TIM_HandleTypeDef *Slide_htim, uint
     step_motor->man[2] = 200;
 
     step_motor->kick_step = 0;
+
 
     step_motor->ball_x_min_range = min_range;
     step_motor->ball_x_max_range = max_range;
@@ -42,6 +50,7 @@ void stop_step_motor(Step_motor *step_motor)
 {
     if (step_motor != NULL)
     {
+
         HAL_TIM_Base_Stop_IT(step_motor->Slide_htim);
         HAL_TIM_PWM_Stop(step_motor->Slide_htim, step_motor->Slide_Channel);
     }
@@ -103,14 +112,14 @@ float *which_man_range(Coord *ball_coord, Step_motor *step_motor)
 
 Step_motor *which_step_motor(Coord *ball_coord, Step_motor *one, Step_motor *two, Step_motor *three)
 {
-    if (ball_coord->x > 371)
+    if (ball_coord->x > ROD_ONE_BOUNDARY_X)
     {
         // 停止只保留一個馬達在場上動
         stop_step_motor(two);
         stop_step_motor(three);
         return one;
     }
-    else if (ball_coord->x > 207)
+    else if (ball_coord->x > ROD_TWO_BOUNDARY_X)
     {
         stop_step_motor(one);
         stop_step_motor(three);
@@ -157,11 +166,11 @@ void init_pid(PIDController *pid)
 {
     if (pid != NULL)
     {
-        pid->Ki = 1.0f;
-        pid->Kp = 65.0f;
+        pid->Ki = 1.2f;
+        pid->Kp = 22.0f;
         pid->DT_SEC = 0.02f;
         pid->MAX_FREQ = 2000.0f;
-        pid->DEAD_ZONE = 150.0f;
+        pid->DEAD_ZONE = 50.0f;
         pid->integral = 0.0f;
         pid->last_time = HAL_GetTick();
     }
@@ -216,4 +225,3 @@ void Set_Step_Frequency(Step_motor *man, float freq)
     __HAL_TIM_SET_COMPARE(man->Slide_htim, man->Slide_Channel, arr / 2);
     __HAL_TIM_SET_COUNTER(man->Slide_htim, 0);
 }
-
