@@ -10,8 +10,8 @@ const int man_range2 = 200;
 const float one_step = 31 * MY_PI / 800;
 
 // X-axis boundaries for rod selection
-const int ROD_ONE_BOUNDARY_X = 405;
-const int ROD_TWO_BOUNDARY_X = 207;
+const int ROD_ONE_BOUNDARY_X = 440;
+const int ROD_TWO_BOUNDARY_X = 240;
 
 
 /* --------------------------------------------step_motor----------------------------------------------- */
@@ -166,11 +166,11 @@ void init_pid(PIDController *pid)
 {
     if (pid != NULL)
     {
-        pid->Ki = 1.2f;
-        pid->Kp = 22.0f;
+        pid->Ki = 3.0f;
+        pid->Kp = 40.0f;
         pid->DT_SEC = 0.02f;
         pid->MAX_FREQ = 2000.0f;
-        pid->DEAD_ZONE = 50.0f;
+        pid->DEAD_ZONE = 150.0f;
         pid->integral = 0.0f;
         pid->last_time = HAL_GetTick();
     }
@@ -178,12 +178,8 @@ void init_pid(PIDController *pid)
 
 float PI_Update(PIDController *pid, float error)
 {
-    uint32_t now = HAL_GetTick();
-    float dt = (now - pid->last_time) / 1000.0f; // 換算成秒
-    pid->last_time = now;
-
-    if (dt <= 0.0f)
-        dt = 0.001f; // 避免除以0
+    // 使用固定的時間差，讓 PI 控制器行為更穩定
+    float dt = pid->DT_SEC;
 
     // 積分項累積誤差
     pid->integral += error * dt;
@@ -197,7 +193,7 @@ float PI_Update(PIDController *pid, float error)
     if (output < -pid->MAX_FREQ)
         output = -pid->MAX_FREQ;
     if (fabs(output) < pid->DEAD_ZONE)
-        output = 0;
+        output = pid->DEAD_ZONE;
 
     return output;
 }

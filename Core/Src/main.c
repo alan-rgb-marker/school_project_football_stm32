@@ -74,12 +74,16 @@ Step_motor *select_step_motor;
 float result = 0.0f;
 bool if_origin[3] = {false, false, false}; //判斷馬達回原點
 
-const int ONE_MAX_X = 450;
-const int ONE_MIN_X = 390;
-const int TWO_MAX_X = 265;
-const int TWO_MIN_X = 210;
-const int THREE_MAX_X = 95;
-const int THREE_MIN_X = 65;
+const int ONE_MAX_X = 480;
+const int ONE_MIN_X = 440;
+const int TWO_MAX_X = 285;
+const int TWO_MIN_X = 240;
+const int THREE_MAX_X = 80;
+const int THREE_MIN_X = 40;
+
+// 進球時間計時
+bool condition = true;
+uint32_t goal_now = 0;
 
 /* USER CODE END PV */
 
@@ -115,16 +119,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     {
       ball_coord = str_find_int(coord_data);
     }
-    else if (strcmp(coord_data, "isno_ball") == 0)
-    {
-      // 初始話位置
-      if (select_step_motor->kick_step % 800 > 0)
-      {
-        ball_coord.x += 30;
-        // ball_coord.y += 30;
-      }
+    // else if (strcmp(coord_data, "isno_ball") == 0)
+    // {
+    //   // 初始話位置
+    //   if (select_step_motor->kick_step % 800 > 0)
+    //   {
+    //     ball_coord.x += 30;
+    //     // ball_coord.y += 30;
+    //   }
       
-    }
+    // }
     
 
     if (strcmp(coord_data, "stopstops") == 0)
@@ -215,14 +219,27 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     }
     if (if_origin[0] == true && if_origin[1] == true && if_origin[2] == true){
       // 傳輸到達圓點訊號
-      char read_msg[] = "read";
+      char read_msg[] = "read\n";
       HAL_UART_Transmit_IT(&huart1, (uint8_t *)read_msg, strlen(read_msg));
       system_state = STATE_READY;
     }
   }
 
-  
-  
+  if ((HAL_GetTick() - goal_now) >= 1000)
+  {
+    if (GPIO_Pin == GPIO_PIN_4)
+    {
+      HAL_UART_Transmit_IT(&huart1, (uint8_t)"goal_p\n", strlen("goal_p\n"));
+      goal_now = HAL_GetTick();
+      
+    }
+    if (GPIO_Pin == GPIO_PIN_5)
+    {
+      goal_now = HAL_GetTick();
+      HAL_UART_Transmit_IT(&huart1, (uint8_t)"goal_c\n", strlen("goal_c\n"));
+    }
+  }
+
 }
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -231,7 +248,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   {
     // 371 402踢球
     count_kick_step(&one);
-    if (one.kick_step % 800 == 0)
+    if (one.kick_step >= 800)
     {
       one.kick_step = 0;
       kick_stop_step_motor(&one);
@@ -249,7 +266,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   {
     // 207到245踢球
     count_kick_step(&two);
-    if (two.kick_step % 800 == 0)
+    if (two.kick_step >= 800)
     {
       two.kick_step = 0;
       kick_stop_step_motor(&two);
@@ -267,7 +284,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   {
     // 27 70踢球
     count_kick_step(&three);
-    if (three.kick_step % 800 == 0)
+    if (three.kick_step >= 800)
     {
       three.kick_step = 0;
       kick_stop_step_motor(&three);
@@ -344,7 +361,7 @@ int main(void)
       {
 
         select_step_motor = which_step_motor(&ball_coord, &one, &two, &three);
-        float *man_range;
+        float *man_range = NULL;
         if (select_step_motor != NULL)
         {
           man_range = which_man_range(&ball_coord, select_step_motor);
@@ -354,7 +371,11 @@ int main(void)
           result = ball_coord.y - *man_range;
           /* ---------------- pid ----------------- */
           freq = PI_Update(&select_step_motor->pid, result);
-          Set_Step_Frequency(select_step_motor, fabs(freq));
+          if (fabs(freq)>0)
+          {
+            Set_Step_Frequency(select_step_motor, fabs(freq));
+          }
+          
           /* ---------------- pid ----------------- */
 
           // 判斷方向
@@ -375,7 +396,7 @@ int main(void)
           if (fabs(result) <= 8) // 判斷距離
           {
             // 如果這個踢球為轉滿一圈先不要給訊號：800為一圈
-            if (select_step_motor->kick_step % 800 == 0 && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range) 
+            if (select_step_motor->kick_step >= 800 || select_step_motor->kick_step == 0 && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range)
             {
               kick_start_step_motor(select_step_motor);
             }
@@ -889,15 +910,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
                           |GPIO_PIN_4|GPIO_PIN_5, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PE2 PE0 PE1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_0|GPIO_PIN_1;
+  /*Configure GPIO pins : PE2 PE4 PE5 PE0
+                           PE1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_0
+                          |GPIO_PIN_1;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PE4 PE5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
