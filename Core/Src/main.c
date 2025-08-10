@@ -58,7 +58,8 @@ Step_motor three;
 
 Coord ball_coord;
 
-typedef enum {
+typedef enum
+{
   STATE_STOPPED,
   STATE_INITIALIZING,
   STATE_HOMING,
@@ -72,7 +73,7 @@ Step_motor *select_step_motor;
 
 // PIDController pid;
 float result = 0.0f;
-bool if_origin[3] = {false, false, false}; //判斷馬達回原點
+bool if_origin[3] = {false, false, false}; // 判斷馬達回原點
 
 const int ONE_MAX_X = 480;
 const int ONE_MIN_X = 440;
@@ -127,9 +128,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     //     ball_coord.x += 30;
     //     // ball_coord.y += 30;
     //   }
-      
+
     // }
-    
 
     if (strcmp(coord_data, "stopstops") == 0)
     {
@@ -148,7 +148,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     {
       HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_RESET);
       // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_RESET);
-      if (system_state == STATE_READY) {
+      if (system_state == STATE_READY)
+      {
         system_state = STATE_RUNNING;
       }
     }
@@ -172,6 +173,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
         HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1);
       }
+
+      while (if_origin[0] == true && if_origin[1] == true && if_origin[2] == true)
+        ;
+      HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_1);
+      // 傳輸到達圓點訊號
+      char read_msg[] = "read\n";
+      HAL_UART_Transmit_IT(&huart1, (uint8_t *)read_msg, strlen(read_msg));
+      system_state = STATE_READY;
     }
   }
 
@@ -186,60 +197,54 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
   }
 }
 
-
 // 原點感測中斷：當回到滑軌移動到原點停止馬達->初始話馬達位置->傳一個以到達原點的訊號給電腦
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-  if (system_state == STATE_HOMING)
+  if (huart1.gState == HAL_UART_STATE_READY)
   {
-    if (GPIO_Pin == GPIO_PIN_0)
+    if (system_state == STATE_HOMING)
     {
-      // 停止馬達移動
-      HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
-      // 初始話馬達位置
-      step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, ONE_MIN_X, ONE_MAX_X);
-      if_origin[0] = true;
+      if (GPIO_Pin == GPIO_PIN_0)
+      {
+        // 停止馬達移動
+        HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+        // 初始話馬達位置
+        step_motor_init(&one, &htim2, TIM_CHANNEL_1, GPIOA, GPIO_PIN_1, 1, &htim1, TIM_CHANNEL_1, ONE_MIN_X, ONE_MAX_X);
+        if_origin[0] = true;
+      }
+
+      if (GPIO_Pin == GPIO_PIN_1)
+      {
+        HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
+        // 初始話馬達位置
+        step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, TWO_MIN_X, TWO_MAX_X);
+        if_origin[1] = true;
+      }
+
+      if (GPIO_Pin == GPIO_PIN_2)
+      {
+        HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_1);
+        step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, THREE_MIN_X, THREE_MAX_X);
+        if_origin[2] = true;
+      }
     }
-    
-    if (GPIO_Pin == GPIO_PIN_1)
+
+    if ((HAL_GetTick() - goal_now) >= 1000)
     {
-      HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
-      // 初始話馬達位置
-      step_motor_init(&two, &htim4, TIM_CHANNEL_1, GPIOD, GPIO_PIN_11, -1, &htim3, TIM_CHANNEL_1, TWO_MIN_X, TWO_MAX_X);
-      if_origin[1] = true;
-    
-    }
-  
-    if (GPIO_Pin == GPIO_PIN_2)
-    {
-      HAL_TIM_PWM_Stop(&htim8, TIM_CHANNEL_1);
-      step_motor_init(&three, &htim8, TIM_CHANNEL_1, GPIOC, GPIO_PIN_7, 1, &htim5, TIM_CHANNEL_1, THREE_MIN_X, THREE_MAX_X);
-      if_origin[2] = true;
-    
-    }
-    if (if_origin[0] == true && if_origin[1] == true && if_origin[2] == true){
-      // 傳輸到達圓點訊號
-      char read_msg[] = "read\n";
-      HAL_UART_Transmit_IT(&huart1, (uint8_t *)read_msg, strlen(read_msg));
-      system_state = STATE_READY;
+      if (GPIO_Pin == GPIO_PIN_4)
+      {
+        const char goal_msg[] = "goal_p\n";
+        HAL_UART_Transmit_IT(&huart1, (uint8_t*)goal_msg, strlen(goal_msg));
+        goal_now = HAL_GetTick();
+      }
+      if (GPIO_Pin == GPIO_PIN_5)
+      {
+        const char goal_msg[] = "goal_c\n";
+        goal_now = HAL_GetTick();
+        HAL_UART_Transmit_IT(&huart1, (uint8_t*)goal_msg, strlen(goal_msg));
+      }
     }
   }
-
-  if ((HAL_GetTick() - goal_now) >= 1000)
-  {
-    if (GPIO_Pin == GPIO_PIN_4)
-    {
-      HAL_UART_Transmit_IT(&huart1, (uint8_t)"goal_p\n", strlen("goal_p\n"));
-      goal_now = HAL_GetTick();
-      
-    }
-    if (GPIO_Pin == GPIO_PIN_5)
-    {
-      goal_now = HAL_GetTick();
-      HAL_UART_Transmit_IT(&huart1, (uint8_t)"goal_c\n", strlen("goal_c\n"));
-    }
-  }
-
 }
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -252,7 +257,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
       one.kick_step = 0;
       kick_stop_step_motor(&one);
-    } 
+    }
   }
 
   if (htim->Instance == TIM2)
@@ -354,7 +359,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // 
+    //
     if (system_state == STATE_RUNNING)
     {
       if (HAL_GetTick() - start_time >= 20)
@@ -371,11 +376,11 @@ int main(void)
           result = ball_coord.y - *man_range;
           /* ---------------- pid ----------------- */
           freq = PI_Update(&select_step_motor->pid, result);
-          if (fabs(freq)>0)
+          if (fabs(freq) > 0)
           {
             Set_Step_Frequency(select_step_motor, fabs(freq));
           }
-          
+
           /* ---------------- pid ----------------- */
 
           // 判斷方向
@@ -400,7 +405,6 @@ int main(void)
             {
               kick_start_step_motor(select_step_motor);
             }
-            
           }
         }
         start_time = HAL_GetTick(); // 時間控制
@@ -951,10 +955,10 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
