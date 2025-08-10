@@ -170,7 +170,7 @@ void init_pid(PIDController *pid)
         pid->Kp = 40.0f;
         pid->DT_SEC = 0.02f;
         pid->MAX_FREQ = 2000.0f;
-        pid->DEAD_ZONE = 150.0f;
+        pid->DEAD_ZONE = 200.0f;
         pid->integral = 0.0f;
         pid->last_time = HAL_GetTick();
     }
