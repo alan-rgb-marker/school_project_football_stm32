@@ -77,7 +77,7 @@ bool if_origin[3] = {false, false, false}; // 判斷馬達回原點
 
 const int ONE_MAX_X = 480;
 const int ONE_MIN_X = 440;
-const int TWO_MAX_X = 285;
+const int TWO_MAX_X = 280;
 const int TWO_MIN_X = 240;
 const int THREE_MAX_X = 80;
 const int THREE_MIN_X = 40;
@@ -109,11 +109,16 @@ Coord str_find_int(char *c)
 {
   Coord cord;
   sscanf(c, "s%03d,%03dp", &cord.x, &cord.y);
-  if (cord.y > 390)
+  if (cord.y > 307)
   {
     // 如果y值大於390，則將y值設為390
-    cord.y = 385;
+    cord.y = 307;
   }
+  if (cord.y < 0)
+  {
+    // 如果y值小於0，則將y值設為0
+    cord.y = 0;
+  }  
   return cord;
 }
 
@@ -124,9 +129,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     if (coord_data[8] == 'p')
     {
       ball_coord = str_find_int(coord_data);
+      memset(coord_data, 0, sizeof(coord_data)); // 清空緩衝區
     }
 
-    if (strcmp(coord_data, "stopstops") == 0)
+    if (strncmp(coord_data, "stopstops", 9) == 0)
     {
       HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_SET);
       system_state = STATE_STOPPED;
@@ -139,7 +145,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       stop_step_motor(&two);
       stop_step_motor(&three);
     }
-    if (strcmp(coord_data, "starttart") == 0)
+    if (strncmp(coord_data, "starttart", 9) == 0)
     {
       HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_RESET);
       // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_RESET);
@@ -244,19 +250,20 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       system_state = STATE_READY;
     }
 
-    if ((HAL_GetTick() - goal_now) >= 1000 && system_state == STATE_RUNNING)
+    if ((HAL_GetTick() - goal_now) >= 2000)// && system_state == STATE_RUNNING)
     {
       if (GPIO_Pin == GPIO_PIN_4)
       {
-        const char goal_msg[] = "goal_p\n";
-        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_msg, strlen(goal_msg));
+        const char goal_p_msg[] = "goal_p\n";
+        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_p_msg, strlen(goal_p_msg));
         goal_now = HAL_GetTick();
       }
       if (GPIO_Pin == GPIO_PIN_5)
       {
-        const char goal_msg[] = "goal_c\n";
+        const char goal_c_msg[] = "goal_c\n";
+        // HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, sizeof(goal_c_msg) - 1);
+        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, strlen(goal_c_msg));
         goal_now = HAL_GetTick();
-        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_msg, strlen(goal_msg));
       }
     }
   }
@@ -412,10 +419,10 @@ int main(void)
             stop_step_motor(select_step_motor);
           }
 
-          if (fabs(result) <= 8) // 判斷距離
+          if (fabs(result) <= 5) // 判斷距離
           {
             // 如果這個踢球為轉滿一圈先不要給訊號：800為一圈
-            if ((select_step_motor->kick_step >= 800 || select_step_motor->kick_step == 0) && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range)
+            if (select_step_motor->kick_step == 0 && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range)
             {
               kick_start_step_motor(select_step_motor);
             }
