@@ -76,15 +76,19 @@ float result = 0.0f;
 bool if_origin[3] = {false, false, false}; // 判斷馬達回原點
 
 const int ONE_MAX_X = 480;
-const int ONE_MIN_X = 440;
-const int TWO_MAX_X = 280;
+const int ONE_MIN_X = 430;
+const int TWO_MAX_X = 290;
 const int TWO_MIN_X = 240;
 const int THREE_MAX_X = 80;
-const int THREE_MIN_X = 40;
+const int THREE_MIN_X = 20;
 
 // 進球時間計時
 bool condition = true;
 uint32_t goal_now = 0;
+
+bool is_ball = true; // 是否有球
+bool if_goal_c = false; // 是否有進球 電腦
+bool if_goal_p = false; // 是否有進球 人
 
 /* USER CODE END PV */
 
@@ -118,7 +122,7 @@ Coord str_find_int(char *c)
   {
     // 如果y值小於0，則將y值設為0
     cord.y = 0;
-  }  
+  }
   return cord;
 }
 
@@ -130,6 +134,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     {
       ball_coord = str_find_int(coord_data);
       memset(coord_data, 0, sizeof(coord_data)); // 清空緩衝區
+    }
+
+    if (strncmp(coord_data, "isno_ball", 9) == 0)
+    {
+      is_ball = false;
+      if_goal_c = false;
+      if_goal_p = false;
+      ball_coord.x = 0;
+      ball_coord.y = 0;
     }
 
     if (strncmp(coord_data, "stopstops", 9) == 0)
@@ -164,7 +177,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       if (HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_0) != GPIO_PIN_RESET)
       {
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
-        Set_Step_Frequency(&one, 500);
+        Set_Step_Frequency(&one, 1000);
         HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
       }
       else
@@ -175,7 +188,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       if (HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_1) != GPIO_PIN_RESET)
       {
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_11, GPIO_PIN_RESET);
-        Set_Step_Frequency(&two, 500);
+        Set_Step_Frequency(&two, 1000);
         HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
       }
       else
@@ -186,7 +199,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       if (HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_2) != GPIO_PIN_RESET)
       {
         HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
-        Set_Step_Frequency(&three, 500);
+        Set_Step_Frequency(&three, 1000);
         HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1);
       }
       else
@@ -250,20 +263,25 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       system_state = STATE_READY;
     }
 
-    if ((HAL_GetTick() - goal_now) >= 2000)// && system_state == STATE_RUNNING)
+    if ((HAL_GetTick() - goal_now) >= 2000) // && system_state == STATE_RUNNING)
     {
-      if (GPIO_Pin == GPIO_PIN_4)
+      if (is_ball == false)
       {
-        const char goal_p_msg[] = "goal_p\n";
-        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_p_msg, strlen(goal_p_msg));
-        goal_now = HAL_GetTick();
-      }
-      if (GPIO_Pin == GPIO_PIN_5)
-      {
-        const char goal_c_msg[] = "goal_c\n";
-        // HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, sizeof(goal_c_msg) - 1);
-        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, strlen(goal_c_msg));
-        goal_now = HAL_GetTick();
+        if (GPIO_Pin == GPIO_PIN_4 && if_goal_p == false)
+        {
+          const char goal_p_msg[] = "goal_p\n";
+          HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_p_msg, strlen(goal_p_msg));
+          if_goal_p = true;
+          goal_now = HAL_GetTick();
+        }
+        if (GPIO_Pin == GPIO_PIN_5 && if_goal_c == false)
+        {
+          const char goal_c_msg[] = "goal_c\n";
+          // HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, sizeof(goal_c_msg) - 1);
+          HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, strlen(goal_c_msg));
+          if_goal_c = true;
+          goal_now = HAL_GetTick();
+        }
       }
     }
   }

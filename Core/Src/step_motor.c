@@ -7,10 +7,10 @@ const double MY_PI = 3.14159265358979323846;
 const int man_range1 = 100;
 const int man_range2 = 200;
 
-const float one_step = 31 * MY_PI / 800;
+const float one_step = 31 * MY_PI / 3200;
 
 // X-axis boundaries for rod selection
-const int ROD_ONE_BOUNDARY_X = 440;
+const int ROD_ONE_BOUNDARY_X = 430;
 const int ROD_TWO_BOUNDARY_X = 240;
 
 
@@ -166,11 +166,11 @@ void init_pid(PIDController *pid)
 {
     if (pid != NULL)
     {
-        pid->Ki = 3.0f;
-        pid->Kp = 40.0f;
+        pid->Ki = 0.5f;
+        pid->Kp = 160.0f;
         pid->DT_SEC = 0.02f;
-        pid->MAX_FREQ = 2000.0f;
-        pid->DEAD_ZONE = 200.0f;
+        pid->MAX_FREQ = 8000.0f;
+        pid->DEAD_ZONE = 1120.0f;
         pid->integral = 0.0f;
         pid->last_time = HAL_GetTick();
     }
