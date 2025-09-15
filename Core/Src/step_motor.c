@@ -10,8 +10,8 @@ const int man_range2 = 200;
 const float one_step = 31 * MY_PI / 3200;
 
 // X-axis boundaries for rod selection
-const int ROD_ONE_BOUNDARY_X = 430;
-const int ROD_TWO_BOUNDARY_X = 240;
+const int ROD_ONE_BOUNDARY_X = 393;
+const int ROD_TWO_BOUNDARY_X = 205;
 
 
 /* --------------------------------------------step_motor----------------------------------------------- */
@@ -125,7 +125,7 @@ Step_motor *which_step_motor(Coord *ball_coord, Step_motor *one, Step_motor *two
         stop_step_motor(three);
         return two;
     }
-    else if (ball_coord->x > 0)
+    else if (ball_coord->x >= -5)
     {
         stop_step_motor(one);
         stop_step_motor(two);

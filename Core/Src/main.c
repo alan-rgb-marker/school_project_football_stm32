@@ -64,7 +64,7 @@ typedef enum
   STATE_INITIALIZING,
   STATE_HOMING,
   STATE_READY,
-  STATE_RUNNING
+  STATE_RUNNING,
 } SystemState;
 
 volatile SystemState system_state = STATE_STOPPED;
@@ -75,20 +75,22 @@ Step_motor *select_step_motor;
 float result = 0.0f;
 bool if_origin[3] = {false, false, false}; // 判斷馬達回原點
 
-const int ONE_MAX_X = 480;
-const int ONE_MIN_X = 430;
-const int TWO_MAX_X = 290;
-const int TWO_MIN_X = 240;
-const int THREE_MAX_X = 80;
-const int THREE_MIN_X = 20;
+const int ONE_MAX_X = 465;
+const int ONE_MIN_X = 393;
+const int TWO_MAX_X = 280;
+const int TWO_MIN_X = 205;
+const int THREE_MAX_X = 90;
+const int THREE_MIN_X = 5;
 
 // 進球時間計時
 bool condition = true;
 uint32_t goal_now = 0;
 
-bool is_ball = true; // 是否有球
-bool if_goal_c = false; // 是否有進球 電腦
-bool if_goal_p = false; // 是否有進球 人
+bool is_ball = true;                 // 是否有球
+volatile bool if_goal_c = false;     // 是否有進球 電腦
+volatile bool goal_c_filter = false; // 進球濾波
+volatile bool if_goal_p = false;     // 是否有進球 人
+volatile bool goal_p_filter = false; // 進球濾波
 
 /* USER CODE END PV */
 
@@ -111,18 +113,20 @@ static void MX_TIM8_Init(void);
 
 Coord str_find_int(char *c)
 {
+  is_ball = true;
   Coord cord;
   sscanf(c, "s%03d,%03dp", &cord.x, &cord.y);
-  if (cord.y > 307)
+  if (cord.y > 300 && select_step_motor != &one)
   {
     // 如果y值大於390，則將y值設為390
-    cord.y = 307;
+    cord.y = 300;
   }
   if (cord.y < 0)
   {
     // 如果y值小於0，則將y值設為0
     cord.y = 0;
   }
+
   return cord;
 }
 
@@ -132,17 +136,30 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   {
     if (coord_data[8] == 'p')
     {
+      if_goal_c = false;
+      goal_c_filter = false;
+      if_goal_p = false;
+      goal_p_filter = false;
+
       ball_coord = str_find_int(coord_data);
       memset(coord_data, 0, sizeof(coord_data)); // 清空緩衝區
     }
 
     if (strncmp(coord_data, "isno_ball", 9) == 0)
     {
-      is_ball = false;
-      if_goal_c = false;
-      if_goal_p = false;
-      ball_coord.x = 0;
-      ball_coord.y = 0;
+      if (if_goal_c == true && goal_c_filter == false)
+      {
+        goal_c_filter = true;
+        const char goal_c_msg[] = "goal_c\n";
+        // HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, sizeof(goal_c_msg) - 1);
+        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, strlen(goal_c_msg));
+      }
+      if (if_goal_p == true && goal_p_filter == false)
+      {
+        goal_p_filter = true;
+        const char goal_p_msg[] = "goal_p\n";
+        HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_p_msg, strlen(goal_p_msg));
+      }
     }
 
     if (strncmp(coord_data, "stopstops", 9) == 0)
@@ -263,26 +280,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       system_state = STATE_READY;
     }
 
-    if ((HAL_GetTick() - goal_now) >= 2000) // && system_state == STATE_RUNNING)
+    if (GPIO_Pin == GPIO_PIN_4 && if_goal_p == false)
     {
-      if (is_ball == false)
-      {
-        if (GPIO_Pin == GPIO_PIN_4 && if_goal_p == false)
-        {
-          const char goal_p_msg[] = "goal_p\n";
-          HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_p_msg, strlen(goal_p_msg));
-          if_goal_p = true;
-          goal_now = HAL_GetTick();
-        }
-        if (GPIO_Pin == GPIO_PIN_5 && if_goal_c == false)
-        {
-          const char goal_c_msg[] = "goal_c\n";
-          // HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, sizeof(goal_c_msg) - 1);
-          HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, strlen(goal_c_msg));
-          if_goal_c = true;
-          goal_now = HAL_GetTick();
-        }
-      }
+      if_goal_p = true;
+    }
+    if (GPIO_Pin == GPIO_PIN_5 && if_goal_c == false)
+    {
+      if_goal_c = true;
     }
   }
 }
@@ -412,7 +416,16 @@ int main(void)
         }
         if (select_step_motor != NULL && man_range != NULL)
         {
-          result = ball_coord.y - *man_range;
+          if (select_step_motor == &one)
+          {
+            result = ball_coord.y - *man_range + 0;
+            /* code */
+          }
+          else
+          {
+            result = ball_coord.y - *man_range; // 三號馬達的y值要加20
+          }
+
           /* ---------------- pid ----------------- */
           freq = PI_Update(&select_step_motor->pid, result);
           if (fabs(freq) > 0)
@@ -944,10 +957,15 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PE2 PE4 PE5 PE0
-                           PE1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_0 | GPIO_PIN_1;
+  /*Configure GPIO pins : PE2 PE0 PE1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2 | GPIO_PIN_0 | GPIO_PIN_1;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PE4 PE5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
