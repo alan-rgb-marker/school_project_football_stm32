@@ -75,11 +75,11 @@ Step_motor *select_step_motor;
 float result = 0.0f;
 bool if_origin[3] = {false, false, false}; // 判斷馬達回原點
 
-const int ONE_MAX_X = 465;
+const int ONE_MAX_X = 485;
 const int ONE_MIN_X = 393;
-const int TWO_MAX_X = 280;
+const int TWO_MAX_X = 294;
 const int TWO_MIN_X = 205;
-const int THREE_MAX_X = 90;
+const int THREE_MAX_X = 92;
 const int THREE_MIN_X = 5;
 
 // 進球時間計時
@@ -147,14 +147,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
     if (strncmp(coord_data, "isno_ball", 9) == 0)
     {
-      if (if_goal_c == true && goal_c_filter == false)
+      is_ball = false;
+      memset(coord_data, 0, sizeof(coord_data)); // 清空緩衝區
+      // 一直傳進球訊號
+      if (if_goal_c == true)
       {
         goal_c_filter = true;
         const char goal_c_msg[] = "goal_c\n";
         // HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, sizeof(goal_c_msg) - 1);
         HAL_UART_Transmit_IT(&huart1, (uint8_t *)goal_c_msg, strlen(goal_c_msg));
       }
-      if (if_goal_p == true && goal_p_filter == false)
+      if (if_goal_p == true)
       {
         goal_p_filter = true;
         const char goal_p_msg[] = "goal_p\n";
@@ -408,58 +411,68 @@ int main(void)
     {
       if (HAL_GetTick() - start_time >= 20)
       {
-        select_step_motor = which_step_motor(&ball_coord, &one, &two, &three);
-        float *man_range = NULL;
-        if (select_step_motor != NULL)
+        if (is_ball == true)
         {
-          man_range = which_man_range(&ball_coord, select_step_motor);
-        }
-        if (select_step_motor != NULL && man_range != NULL)
-        {
-          if (select_step_motor == &one)
+          select_step_motor = which_step_motor(&ball_coord, &one, &two, &three);
+          float *man_range = NULL;
+          if (select_step_motor != NULL)
           {
-            result = ball_coord.y - *man_range + 0;
-            /* code */
+            man_range = which_man_range(&ball_coord, select_step_motor);
           }
-          else
+          if (select_step_motor != NULL && man_range != NULL)
           {
-            result = ball_coord.y - *man_range; // 三號馬達的y值要加20
-          }
-
-          /* ---------------- pid ----------------- */
-          freq = PI_Update(&select_step_motor->pid, result);
-          if (fabs(freq) > 0)
-          {
-            Set_Step_Frequency(select_step_motor, fabs(freq));
-          }
-
-          /* ---------------- pid ----------------- */
-
-          // 判斷方向
-          if (result > 2)
-          {
-            dir_and_move_step_motor(select_step_motor, 1);
-          }
-          else if (result < -2)
-          {
-            dir_and_move_step_motor(select_step_motor, -1);
-          }
-          else
-          {
-
-            stop_step_motor(select_step_motor);
-          }
-
-          if (fabs(result) <= 5) // 判斷距離
-          {
-            // 如果這個踢球為轉滿一圈先不要給訊號：800為一圈
-            if (select_step_motor->kick_step == 0 && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range)
+            if (select_step_motor == &one)
             {
-              kick_start_step_motor(select_step_motor);
+              result = ball_coord.y - *man_range + 0;
+              /* code */
+            }
+            else
+            {
+              result = ball_coord.y - *man_range; // 三號馬達的y值要加20
+            }
+
+            /* ---------------- pid ----------------- */
+            freq = PI_Update(&select_step_motor->pid, result);
+            if (fabs(freq) > 0)
+            {
+              Set_Step_Frequency(select_step_motor, fabs(freq));
+            }
+
+            /* ---------------- pid ----------------- */
+
+            // 判斷方向
+            if (result > 2)
+            {
+              dir_and_move_step_motor(select_step_motor, 1);
+            }
+            else if (result < -2)
+            {
+              dir_and_move_step_motor(select_step_motor, -1);
+            }
+            else
+            {
+              stop_step_motor(select_step_motor);
+            }
+
+            // 判斷踢球的時機
+            if (fabs(result) <= 5) // 判斷距離
+            {
+              // 如果這個踢球為轉滿一圈先不要給訊號：800為一圈
+              if (select_step_motor->kick_step == 0 && ball_coord.x > select_step_motor->ball_x_min_range && ball_coord.x < select_step_motor->ball_x_max_range)
+              {
+                kick_start_step_motor(select_step_motor);
+              }
             }
           }
+          start_time = HAL_GetTick(); // 時間控制
         }
-        start_time = HAL_GetTick(); // 時間控制
+        else
+        {
+          // 沒有球 停止馬達
+          stop_step_motor(&one);
+          stop_step_motor(&two);
+          stop_step_motor(&three);
+        }
       }
     }
 
